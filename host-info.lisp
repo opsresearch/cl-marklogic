@@ -40,34 +40,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun get-host-info()
 	"Returns two tier nested a-lists containing properties of all of the hosts in the cluster."
-	(read-from-string (evaluate-xquery 
-		"
-	    xquery version '1.0-ml';
-
-	    import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
-
-	    let $config := admin:get-configuration()
-	    return
-	    string-join((
-	       '(',
-	       (
-	         for $host-id in admin:get-host-ids($config)
-	         return (
-	            concat('(', $host-id, ' . ('),
-	           concat('(',':name', ' . &quot;', admin:host-get-name($config, $host-id), '&quot;)'),
-	           concat('(',':port', ' . ', admin:host-get-port($config, $host-id), ')'),
-	           concat('(',':group-id', ' . ', admin:host-get-group($config, $host-id), ')'),
-	           concat('(',':group-name', ' . &quot;', admin:group-get-name($config, admin:host-get-group($config, $host-id)), '&quot;)'),
-	           if(admin:host-get-zone($config, $host-id)) then
-	             concat('(',':zone', ' . &quot;', admin:host-get-zone($config, $host-id), '&quot;)')
-	           else
-	             concat('(',':zone', ' . NIL)'),
-	           '))')
-	       ),
-	       ')'
-	    ))
-		"
-		)))
+	(read-from-string 
+		(evaluate-xquery "
+		    xquery version '1.0-ml';
+		    import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
+		    (:#include host-info :)
+		    local:host-info()
+		    "
+		    )))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

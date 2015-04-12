@@ -20,6 +20,9 @@
 
 (in-package #:cl-marklogic)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Response processing
+
 (defun find-multi-marker (content)
 	(let (
 		(start (search "--" content)))
@@ -37,9 +40,47 @@
 	(let(
 		(offset (calc-text-offset content))
 		(end-marker (format nil "~A--" (find-multi-marker content))))
-	(subseq content offset (+ -2 (search end-marker content :start2 offset)))))
+			(subseq content offset (+ -2 (search end-marker content :start2 offset)))))
 
-(defun evaluate-xquery(xquery)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Query processing
+
+(defun read-stream (stream)
+  (let ((seq (make-array (file-length stream) :element-type 'character :fill-pointer t)))
+    (setf (fill-pointer seq) (read-sequence seq stream))
+    seq))
+
+
+(defun read-include (include)
+	(with-open-file (stream 
+		(format nil "~A~A"
+			(asdf:system-source-directory :cl-marklogic)
+			(make-pathname :directory '(:relative "xquery") :name include :type "xqy")
+			))
+ 		(read-stream stream)))
+
+(defun inline-includes (xquery)
+	(let (
+		(begin (search "(:#include " xquery)))
+	
+	(if begin 
+		(let (
+			(file-begin (search " " xquery :start2 begin))
+			(end (search ":)" xquery :start2 begin)))
+			
+				(inline-includes 
+					(format nil "~A~A~A"
+						(subseq xquery 0 begin)
+						(read-include (string-trim " " (subseq xquery file-begin end )))
+						(subseq xquery (+ 2 end))
+						)))
+		xquery )))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Evaluate an XQuery string
+
+(defun evaluate-xquery(xquery &optional variables)
+"Evaluate an XQuery string inlining includes and applying variables."
 	(let(
 		(content 
 			(babel:octets-to-string
@@ -51,13 +92,11 @@
 						(cdr (assoc :evaluate-path *connection*)))
 					:method :post 
 					:accept "multipart/mixed"
-					:basic-authorization `(
-						,(cdr (assoc :user *connection*))
-						,(cdr (assoc :password *connection*)))
-					:parameters `(
-						("xquery" . ,xquery))))))
-
+					:basic-authorization (list
+						(cdr (assoc :user *connection*))
+						(cdr (assoc :password *connection*)))
+					:parameters (list
+						(cons "xquery" (inline-includes xquery)))))))
 	(extract-text-only content)
-
 	))
 
