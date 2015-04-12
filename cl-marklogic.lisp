@@ -21,9 +21,9 @@
 (in-package #:cl-marklogic)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Global Connection
+;; Initial value for the global default connection
 
-(defparameter *connection* '(
+(defparameter *initial-connection* '(
 	(:URL         . "http://localhost:8001/")
 	(:protocol      . "http")
 	(:host          . "localhost")
@@ -31,12 +31,38 @@
 	(:evaluate-path . "/LATEST/eval")
   	(:user          . "admin")
   	(:password      . "passw0rd"))
-"Rest Connection Parameters: an a-list of properties.")
+"This global parameter is an a-list used to initialize the global connection.")
 
-(defun get-connection() *connection*)
-(defun set-connection(new-value)
-	(setf *connection* new-value))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Global default connection
+
+(defvar *connection* *initial-connection*
+"This global variable is an a-list used bt default to connect.
+The macro with-connection can be used to override the connection.")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Get initial connection value
+
+(defun get-initial-connection()
+"This function returns the connection that is used to initialize the global connection."
+ *initial-connection*)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Get global default connection
+
+(defun get-connection()
+"This function returns the global connection value."
+ *connection*)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Set global default connection
+
+(defun set-connection(new-value)
+"This function sets the global connection value."
+	(setf *connection* new-value))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Host check
 
 (defun ping()
 	"Returns the string \"pong\" echoed back from the server."
@@ -49,12 +75,10 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Connection management.
+;; Connection override.
 
 (defmacro with-connection ((connection-value) &body body)
-  "Binds `connection-value` to *connection* for the expression evaluation."
+  "Binds `connection-value` to *connection* to override the global connection a-list."
   `(let ((*connection* ,connection-value))
      (progn
        ,@body)))
