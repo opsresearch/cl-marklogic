@@ -1,4 +1,4 @@
-(:local-host-info.xqy:)
+(:host-info.xqy:)
 
 (:;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 

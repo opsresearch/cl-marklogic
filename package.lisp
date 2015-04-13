@@ -25,8 +25,10 @@
 		#:get-connection
 		#:with-connection
 		#:ping
+		#:echo
 		#:get-host-info
 		#:host-ids
 		#:host-property
-		#:evaluate-xquery))
+		#:evaluate-xquery
+		))
 

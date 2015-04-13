@@ -1,4 +1,4 @@
-(:local-map-to-a-list.xqy:)
+(:map-to-alist.xqy:)
 
 (:;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
