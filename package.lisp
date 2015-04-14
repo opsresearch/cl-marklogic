@@ -29,6 +29,9 @@
 		#:get-host-info
 		#:host-ids
 		#:host-property
+		#:get-forest-info
+		#:forest-ids
+		#:forest-property
 		#:evaluate-xquery
 		))
 

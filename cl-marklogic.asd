@@ -27,4 +27,5 @@
   :components ((:file "package")
                (:file "cl-marklogic")
                (:file "xquery")
-               (:file "host-info")))
+               (:file "host-info")
+               (:file "forest-info")))

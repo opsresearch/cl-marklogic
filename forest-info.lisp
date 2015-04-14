@@ -1,4 +1,4 @@
-;;;; host-info.lisp
+;;;; forest-info.lisp
 
 ;;;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -21,30 +21,33 @@
 (in-package #:cl-marklogic)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun host-ids (&optional (host-info (get-host-info)))
-	"Returns the a list the host ids in the cluster."
-	(mapcar #'car host-info))
+(defun forest-ids (&optional (forest-info (get-forest-info)))
+	"Returns the a list the forest ids in the cluster."
+	(mapcar #'car forest-info))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun host-property (host-id property &optional (host-info (get-host-info)))
-	"Returns the value of a host property given the host-id and property.
+(defun forest-property (forest-id property &optional (forest-info (get-forest-info)))
+	"Returns the value of a forest property given the forest-id and property.
 	The available properties are:
-	  :name  -> String name of the host.
-	  :port  -> Port number to which the host is bound.
-	  :group -> Id of the group to which the host belongs.
-	  :zone  -> Zone where the host is assigned.
+	  :name            -> String name of the forest.
+	  :host            -> Id of the host holding the forest.
+	  :database        -> Id of the database composed from the forest.
+	  :replicas        -> List of the ids of this forest's replicas.
+	  :data-directory  -> Path of the data directory.
+	  :large-directory -> Path of the large data directory.
+	  :fast-directory  -> Path of the fast data directory.
 	 "
-	(cdr (assoc property (cdr (assoc host-id host-info)))))
+	(cdr (assoc property (cdr (assoc forest-id forest-info)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun get-host-info()
-	"Returns two tier nested a-lists containing properties of all of the hosts in the cluster."
+(defun get-forest-info()
+	"Returns two tier nested a-lists containing properties of all of the forests in the cluster."
 	(read-from-string 
 		(evaluate-xquery "
 		    xquery version '1.0-ml';
 		    import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
-		    (:#include host-info :)
-		    local:host-info()
+		    (:#include forest-info :)
+		    local:forest-info()
 		    "
 		    )))
 

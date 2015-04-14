@@ -1,4 +1,4 @@
-(:map-to-alist.xqy:)
+(:to-sexpy.xqy:)
 
 (:;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -18,19 +18,40 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;:)
 
+declare function local:to-sexpy($value) { 
+	string-join(
+		if($value instance of map:map) then
+			local:map-to-alist($value)
+      	else if($value instance of xs:string) then
+			(' &quot;', xs:string($value), '&quot; ')
+		else if(count($value) eq 0) then
+			" NIL "
+		else if(count($value) gt 1) then
+			local:seq-to-list($value)
+		else
+			(' ', xs:string($value), ' ')
+		)
+};
+
+declare function local:seq-to-list($seq) { 
+	string-join((
+		'(',
+		for $val in $seq
+		  return 
+			  local:to-sexpy($val),
+		')'
+	))
+};
+
 declare function local:map-to-alist($map) { 
 	string-join((
 		'(',
 		for $key in map:keys($map)
 			let $value := map:get($map, $key)
-		return 
-			('(', $key, ' . ',
-			if($value instance of map:map) then
-				local:map-to-alist($value)
-			else
-				('&quot;', xs:string($value), '&quot;')
-		 	,')'),
+			return 
+				('(', $key, ' . ', local:to-sexpy($value),')'),
 		')'
 	))
 };
+
 
