@@ -18,18 +18,37 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;:)
 
-declare function local:to-sexpy($value) { 
+declare function local:to-sexpy($v) { 
 	string-join(
-		if($value instance of map:map) then
-			local:map-to-alist($value)
-      	else if($value instance of xs:string) then
-			(' &quot;', xs:string($value), '&quot; ')
-		else if(count($value) eq 0) then
-			" NIL "
-		else if(count($value) gt 1) then
-			local:seq-to-list($value)
+
+		if(empty($v)) then " NIL "
+		else if(count($v) gt 1) then local:seq-to-list($v)
 		else
-			(' ', xs:string($value), ' ')
+		typeswitch($v)
+			case map:map 				return local:map-to-alist($v)
+			case xs:string 				return (' &quot;', $v, '&quot; ')
+			case xs:decimal 			return (' ', xs:string($v), ' ')
+			case xs:float 				return (' ', xs:string($v), ' ')
+			case xs:double 				return (' ', xs:string($v), ' ')
+			case xs:boolean				return (' ', if($v) then 'T' else 'NIL', ' ')
+			case xs:base64Binary		return (' &quot;', xs:string($v), '&quot; ')
+			case xs:hexBinary			return (' &quot;', xs:string($v), '&quot; ')
+			case xs:anyURI				return (' &quot;', xs:string($v), '&quot; ')
+			case xs:QName				return (' &quot;', xs:string($v), '&quot; ')
+			case xs:NOTATION			return (' &quot;', xs:string($v), '&quot; ')
+			case xs:hexBinary			return (' &quot;', xs:string($v), '&quot; ')
+
+			case xs:date 				return (' &quot;', xs:string($v), '&quot; ')
+			case xs:time 				return (' &quot;', xs:string($v), '&quot; ')
+			case xs:dateTime 			return (' &quot;', xs:string($v), '&quot; ')
+			case xs:gYearMonth 			return (' &quot;', xs:string($v), '&quot; ')
+			case xs:gYear 				return (' &quot;', xs:string($v), '&quot; ')
+			case xs:gMonthDay 			return (' &quot;', xs:string($v), '&quot; ')
+			case xs:gDay 				return (' &quot;', xs:string($v), '&quot; ')
+			case xs:gMonth 				return (' &quot;', xs:string($v), '&quot; ')
+			case xs:duration 			return (' &quot;', xs:string($v), '&quot; ')
+
+			default 					return (' &quot;', xdmp:quote($v), '&quot; ')
 		)
 };
 
