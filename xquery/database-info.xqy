@@ -1,6 +1,6 @@
-;;;; cl-marklogic.asd
+(:database-info.xqy:)
 
-;;;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
+(:;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
 ;;;; Copyright (C) 2015 OpsResearch LLC (a Delaware company)
 ;;;; 
@@ -16,18 +16,24 @@
 ;;;; You should have received a copy of the GNU Lesser General Public License
 ;;;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;;; 
-;;;; ;;;;; END LICENSE BLOCK ;;;;;
+;;;; ;;;;; END LICENSE BLOCK ;;;:)
 
-(asdf:defsystem #:cl-marklogic
-  :description "Common Lisp library for accessing MarkLogic Server."
-  :author "Donald Anderson <dranderson@OpsResearch.com>"
-  :license "LGPL3"
-  :depends-on (#:drakma)
-  :serial t
-  :components ((:file "package")
-               (:file "cl-marklogic")
-               (:file "xquery")
-               (:file "host-info")
-               (:file "forest-info")
-               (:file "database-info")
-               ))
+(:#include to-sexpy :)
+
+declare function local:database-info() { 
+
+  let $config := admin:get-configuration()
+  let $databases := map:map()
+  let $_ :=
+    for $database-id in admin:get-database-ids($config)
+      let $props := map:map()
+      let $_ := (
+        map:put($props, ':name', admin:database-get-name($config, $database-id)),
+        map:put($props, ':forests', admin:database-get-attached-forests($config, $database-id))
+        )
+      return map:put($databases, xs:string($database-id), $props)
+
+return local:to-sexpy($databases)
+};
+
+

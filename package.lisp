@@ -32,6 +32,9 @@
 		#:get-forest-info
 		#:forest-ids
 		#:forest-property
+		#:get-database-info
+		#:database-ids
+		#:database-property
 		#:evaluate-xquery
 		))
 
