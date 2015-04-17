@@ -20,6 +20,39 @@
 
 (:#include to-sexpy :)
 
+declare function local:add-status-props($forest-id, $props){
+
+ let $status := xdmp:forest-status($forest-id)
+ return (
+
+    map:put($props, ':master-forest',         
+      xs:unsignedLong($status/fs:master-forest/text())),
+
+    map:put($props, ':journals-size', 
+      xs:unsignedLong($status/fs:journals-size/text())),
+
+    map:put($props, ':large-data-size', 
+      xs:unsignedLong($status/fs:large-data-size/text())),
+
+    map:put($props, ':data-size', sum(xs:unsignedLong($status/fs:stands/fs:stand[fs:is-fast/text()='false']/fs:disk-size/text()))),
+
+    map:put($props, ':memory-size', sum(xs:unsignedLong($status/fs:stands/fs:stand[fs:is-fast/text()='false']/fs:memory-size/text()))),
+
+    map:put($props, ':fast-data-size', sum(xs:unsignedLong($status/fs:stands/fs:stand[fs:is-fast/text()='true']/fs:disk-size/text()))),
+
+    map:put($props, ':fast-memory-size', sum(xs:unsignedLong($status/fs:stands/fs:stand[fs:is-fast/text()='true']/fs:memory-size/text()))),
+
+    map:put($props, ':device-space', 
+      xs:unsignedLong($status/fs:device-space/text())),
+
+    map:put($props, ':large-device-space', 
+      xs:unsignedLong($status/fs:large-device-space/text())),
+    
+    map:put($props, ':fast-device-space', 
+      xs:unsignedLong($status/fs:fast-device-space/text()))
+   )
+};
+
 declare function local:forest-info() { 
 
   let $config := admin:get-configuration()
@@ -28,13 +61,16 @@ declare function local:forest-info() {
     for $forest-id in admin:get-forest-ids($config)
       let $props := map:map()
       let $_ := (
-        map:put($props, ':name', admin:forest-get-name($config, $forest-id)),
-        map:put($props, ':host', admin:forest-get-host($config, $forest-id)),
-        map:put($props, ':database', admin:forest-get-database($config, $forest-id)),
-        map:put($props, ':replicas', admin:forest-get-replicas($config, $forest-id)),
-        map:put($props, ':data-directory', admin:forest-get-data-directory($config, $forest-id)),
-        map:put($props, ':large-directory', admin:forest-get-large-data-directory($config, $forest-id)),
-        map:put($props, ':fast-directory', admin:forest-get-fast-data-directory($config, $forest-id))
+        map:put($props, ':time-stamp',  current-dateTime()),
+        map:put($props, ':forest-id',   $forest-id),
+        map:put($props, ':forest-name', admin:forest-get-name($config, $forest-id)),
+        map:put($props, ':host-id',     admin:forest-get-host($config, $forest-id)),
+        map:put($props, ':database-id', admin:forest-get-database($config, $forest-id)),
+        map:put($props, ':replicas',    admin:forest-get-replicas($config, $forest-id)),
+        map:put($props, ':data-dir',    admin:forest-get-data-directory($config, $forest-id)),
+        map:put($props, ':large-dir',   admin:forest-get-large-data-directory($config, $forest-id)),
+        map:put($props, ':fast-dir',    admin:forest-get-fast-data-directory($config, $forest-id)),
+        local:add-status-props($forest-id, $props)
         )
       return map:put($forests, xs:string($forest-id), $props)
 

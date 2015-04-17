@@ -22,17 +22,19 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun host-ids (&optional (host-info (get-host-info)))
-	"Returns the a list the host ids in the cluster."
+	"Returns a list the host ids in the cluster."
 	(mapcar #'car host-info))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun host-property (host-id property &optional (host-info (get-host-info)))
 	"Returns the value of a host property given the host-id and property.
 	The available properties are:
-	  :name  -> String name of the host.
-	  :port  -> Port number to which the host is bound.
-	  :group -> Id of the group to which the host belongs.
-	  :zone  -> Zone where the host is assigned.
+		:time-stamp	-> The date and time this a-list was created.
+		:host-id  	-> Id of this host.
+		:host-name  -> String name of this host.
+	  	:bind-port  -> Port number to which this host is bound.
+	  	:group 		-> Id of the group to which this host belongs.
+	  	:zone  		-> Zone where this host is assigned.
 	 "
 	(cdr (assoc property (cdr (assoc host-id host-info)))))
 

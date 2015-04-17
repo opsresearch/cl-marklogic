@@ -30,6 +30,7 @@
 		#:host-ids
 		#:host-property
 		#:get-forest-info
+		#:get-forest-status
 		#:forest-ids
 		#:forest-property
 		#:get-database-info

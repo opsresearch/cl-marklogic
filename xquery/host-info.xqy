@@ -28,14 +28,12 @@ declare function local:host-info() {
     for $host-id in admin:get-host-ids($config)
       let $props := map:map()
       let $_ := (
-        map:put($props, ':name', admin:host-get-name($config, $host-id)),
-        map:put($props, ':port', admin:host-get-port($config, $host-id)),
-        map:put($props, ':group', admin:host-get-group($config, $host-id)),
-
-        if(admin:host-get-zone($config, $host-id)) then
-          map:put($props, ':zone', admin:host-get-zone($config, $host-id))
-        else
-          ()
+        map:put($props, ':time-stamp', current-dateTime()),
+        map:put($props, ':host-id',     $host-id),
+        map:put($props, ':host-name',   admin:host-get-name($config, $host-id)),
+        map:put($props, ':bind-port',   admin:host-get-port($config, $host-id)),
+        map:put($props, ':group',       admin:host-get-group($config, $host-id)),
+        map:put($props, ':zone',        admin:host-get-zone($config, $host-id))
       )
       return map:put($hosts, xs:string($host-id), $props)
 

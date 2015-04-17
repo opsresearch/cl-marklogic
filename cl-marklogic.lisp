@@ -24,7 +24,6 @@
 ;; Initial value for the global default connection
 
 (defparameter *initial-connection* '(
-	(:URL         . "http://localhost:8001/")
 	(:protocol      . "http")
 	(:host          . "localhost")
 	(:port          . 8000)
@@ -37,7 +36,7 @@
 ;; Global default connection
 
 (defvar *connection* *initial-connection*
-"This global variable is an a-list used bt default to connect.
+"This global variable is an a-list used by default to connect.
 The macro with-connection can be used to override the connection.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

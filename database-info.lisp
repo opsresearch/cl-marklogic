@@ -22,14 +22,16 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun database-ids (&optional (database-info (get-database-info)))
-	"Returns the a list the database ids in the cluster."
+	"Returns a list the database ids in the cluster."
 	(mapcar #'car database-info))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun database-property (database-id property &optional (database-info (get-database-info)))
 	"Returns the value of a database property given the database-id and property.
 	The available properties are:
-	  :name            -> String name of the database.
+	  :time-stamp      -> The date and time this a-list was created.
+      :forest-ids      -> Id of this database.
+	  :database-name   -> String name of the database.
 	  :forests         -> Attached forest IDs.
 	"
 	(cdr (assoc property (cdr (assoc database-id database-info)))))

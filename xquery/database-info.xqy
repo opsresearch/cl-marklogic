@@ -28,7 +28,9 @@ declare function local:database-info() {
     for $database-id in admin:get-database-ids($config)
       let $props := map:map()
       let $_ := (
-        map:put($props, ':name', admin:database-get-name($config, $database-id)),
+        map:put($props, ':time-stamp', current-dateTime()),
+        map:put($props, ':database-id', $database-id),
+        map:put($props, ':database-name', admin:database-get-name($config, $database-id)),
         map:put($props, ':forests', admin:database-get-attached-forests($config, $database-id))
         )
       return map:put($databases, xs:string($database-id), $props)

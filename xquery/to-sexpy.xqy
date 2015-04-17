@@ -18,6 +18,10 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;:)
 
+declare function local:escape($string){
+	replace($string, "&quot;", "\\&quot;")
+};
+
 declare function local:to-sexpy($v) { 
 	string-join(
 
@@ -26,7 +30,7 @@ declare function local:to-sexpy($v) {
 		else
 		typeswitch($v)
 			case map:map 				return local:map-to-alist($v)
-			case xs:string 				return (' &quot;', $v, '&quot; ')
+			case xs:string 				return (' &quot;', local:escape($v), '&quot; ')
 			case xs:decimal 			return (' ', xs:string($v), ' ')
 			case xs:float 				return (' ', xs:string($v), ' ')
 			case xs:double 				return (' ', xs:string($v), ' ')
@@ -48,7 +52,7 @@ declare function local:to-sexpy($v) {
 			case xs:gMonth 				return (' &quot;', xs:string($v), '&quot; ')
 			case xs:duration 			return (' &quot;', xs:string($v), '&quot; ')
 
-			default 					return (' &quot;', xdmp:quote($v), '&quot; ')
+			default 					return (' &quot;', local:escape(xdmp:quote($v)), '&quot; ')
 		)
 };
 
