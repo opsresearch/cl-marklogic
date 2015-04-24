@@ -53,9 +53,9 @@
 
 (defun read-include (include)
 	(with-open-file (stream 
-		(format nil "~A~A"
-			(asdf:system-source-directory :cl-marklogic)
+		(merge-pathnames
 			(make-pathname :directory '(:relative "xquery") :name include :type "xqy")
+			(asdf:system-source-directory :cl-marklogic)
 			))
  		(read-stream stream)))
 
