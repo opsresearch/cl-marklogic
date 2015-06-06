@@ -18,8 +18,6 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;:)
 
-(:#include to-sexpy :)
-
 declare function local:database-info() { 
 
   let $config := admin:get-configuration()
@@ -35,7 +33,7 @@ declare function local:database-info() {
         )
       return map:put($databases, xs:string($database-id), $props)
 
-return local:to-sexpy($databases)
+return $databases
 };
 
 

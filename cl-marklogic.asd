@@ -22,12 +22,15 @@
   :description "Common Lisp library for accessing MarkLogic Server."
   :author "Donald Anderson <dranderson@OpsResearch.com>"
   :license "LGPL3"
-  :depends-on (#:drakma)
+  :depends-on (
+    #:drakma
+    #:local-time)
   :serial t
   :components ((:file "package")
                (:file "cl-marklogic")
-               (:file "xquery")
-               (:file "host-info")
-               (:file "forest-info")
-               (:file "database-info")
+               (:file "lisp/database")
+               (:file "lisp/forest")
+               (:file "lisp/host")
+               (:file "lisp/rest-api")
+               (:file "lisp/xquery")
                ))

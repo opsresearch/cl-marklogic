@@ -68,7 +68,7 @@ The macro with-connection can be used to override the connection.")
 	(evaluate-xquery 
 		"
 		xquery version '1.0-ml';
-		'pong' 
+		'&quot;pong&quot;' 
 		"
 	))
 
@@ -81,9 +81,23 @@ The macro with-connection can be used to override the connection.")
 		"
 		xquery version '1.0-ml';
 		declare variable $string as xs:string external;
-		$string 
+	    (:#include to-sexpy :)
+		local:to-sexpy($string) 
 		"
 		(list (cons "string" string))
+	))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Host dateTime
+
+(defun host-time()
+	"Returns the current local dateTime of the server."
+	(evaluate-xquery 
+		"
+		xquery version '1.0-ml';
+	    (:#include to-sexpy :)
+		local:to-sexpy(current-dateTime())
+		"
 	))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

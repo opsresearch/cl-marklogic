@@ -21,28 +21,6 @@
 (in-package #:cl-marklogic)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Response processing
-
-(defun find-multi-marker (content)
-	(let (
-		(start (search "--" content)))
-	(subseq content
-	 start
-	 (search (format nil "~C~C" #\return #\linefeed) content :start2 start)
-	 )))
-
-(defun calc-text-offset (content)
-	(+ 4 (search 
-		(format nil "~C~C~C~C" #\return #\linefeed #\return #\linefeed)
-		content)))
-
-(defun extract-text-only (content)
-	(let(
-		(offset (calc-text-offset content))
-		(end-marker (format nil "~A--" (find-multi-marker content))))
-			(subseq content offset (+ -2 (search end-marker content :start2 offset)))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Query processing
 
 (defun read-stream (stream)
@@ -60,7 +38,7 @@
  		(read-stream stream)))
 
 (defun variables-to-json (variables)
-	(format nil "{ ~{~a~} }"
+	(format nil "{ ~{~a~^,~} }"
 		(mapcar 
 			(lambda (it) (format nil "\"~A\":\"~A\" " (car it) (cdr it))) 
 			variables)))
@@ -87,23 +65,12 @@
 
 (defun evaluate-xquery(xquery &optional (variables () ))
 "Evaluate an XQuery string inlining includes and applying variables."
-	(let(
-		(content 
-			(babel:octets-to-string
-				 (drakma:http-request 
-					(format nil "~a://~a:~d~a" ;URI
-						(cdr (assoc :protocol *connection*))
-						(cdr (assoc :host *connection*))
-						(cdr (assoc :port *connection*))
-						(cdr (assoc :evaluate-path *connection*)))
-					:method :post 
-					:accept "multipart/mixed"
-					:basic-authorization (list
-						(cdr (assoc :user *connection*))
-						(cdr (assoc :password *connection*)))
-					:parameters (list
-						(cons "xquery" (inline-includes xquery))
-						(cons "vars" (variables-to-json variables)))))))
-	(extract-text-only content)
-	))
+(read-from-string
+	(extract-text-only
+		(call-rest-api (cdr (assoc :evaluate-path *connection*))
+			:method :post
+			:accept "multipart/mixed"
+			:parameters (list
+				(cons "xquery" (inline-includes xquery))
+				(cons "vars" (variables-to-json variables)))))))
 

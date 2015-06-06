@@ -18,8 +18,6 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;:)
 
-(:#include to-sexpy :)
-
 declare function local:host-info() { 
 
   let $config := admin:get-configuration()
@@ -37,7 +35,7 @@ declare function local:host-info() {
       )
       return map:put($hosts, xs:string($host-id), $props)
 
-return local:to-sexpy($hosts)
+return $hosts
 };
 
 

@@ -37,5 +37,10 @@
 		#:database-ids
 		#:database-property
 		#:evaluate-xquery
+		#:host-time
+		#:database-create
+		#:forest-create
+		#:database-attach-forest
 		))
 
+(local-time:enable-read-macros)

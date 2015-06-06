@@ -1,4 +1,4 @@
-(:to-sexpy.xqy:)
+(:/cl-marklogic/to-sexpy.xqy:)
 
 (:;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -17,6 +17,15 @@
 ;;;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;:)
+
+xquery version "1.0-ml";
+declare namespace clml = "http://opsresearch.com/cl-marklogic";
+
+declare function clml:to-sexpy($v) {
+  local:to-sexpy($v)
+};
+
+(: ---- CUT HERE ---- :)
 
 declare function local:to-sexpy($v) { 
 	string-join(

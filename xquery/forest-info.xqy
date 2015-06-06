@@ -18,8 +18,6 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;:)
 
-(:#include to-sexpy :)
-
 declare function local:add-status-props($forest-id, $props){
 
  let $status := xdmp:forest-status($forest-id)
@@ -74,7 +72,7 @@ declare function local:forest-info() {
         )
       return map:put($forests, xs:string($forest-id), $props)
 
-return local:to-sexpy($forests)
+return $forests
 };
 
 
