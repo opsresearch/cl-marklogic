@@ -19,11 +19,10 @@
 ;;;; ;;;;; END LICENSE BLOCK ;;;;;
 
 (in-package #:cl-marklogic)
-(use-package '5am)
 
 (defun test-all ()
-  (explain! (run 'test-all)))
+  (5am:explain! (5am:run 'test-all)))
 
-(test test-all
-	(is ( equal (ping) "pong"))
-	(is ( equal (echo "5am echo test") "5am echo test")))
+(5am:test test-all
+	(5am:is ( equal (ping) "pong"))
+	(5am:is ( equal (echo "5am echo test") "5am echo test")))
