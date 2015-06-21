@@ -24,7 +24,8 @@
   :license "LGPL3"
   :depends-on (
     #:drakma
-    #:local-time)
+    #:local-time
+    #:fiveam)
   :serial t
   :components ((:file "package")
                (:file "cl-marklogic")
@@ -33,4 +34,5 @@
                (:file "lisp/host")
                (:file "lisp/rest-api")
                (:file "lisp/xquery")
+               (:file "lisp/test")
                ))

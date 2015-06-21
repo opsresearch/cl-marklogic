@@ -1,4 +1,4 @@
-;;;; package.lisp
+;;;; test.lisp
 
 ;;;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -18,30 +18,12 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;;;
 
-(defpackage #:cl-marklogic
-	(:use #:cl)
-	(:export
-		#:set-connection
-		#:get-connection
-		#:with-connection
-		#:ping
-		#:echo
-		#:get-host-info
-		#:host-ids
-		#:host-property
-		#:get-forest-info
-		#:get-forest-status
-		#:forest-ids
-		#:forest-property
-		#:get-database-info
-		#:database-ids
-		#:database-property
-		#:evaluate-xquery
-		#:host-time
-		#:database-create
-		#:forest-create
-		#:database-attach-forest
-  		#:test-all
-		))
+(in-package #:cl-marklogic)
+(use-package '5am)
 
-(local-time:enable-read-macros)
+(defun test-all ()
+  (explain! (run 'test-all)))
+
+(test test-all
+	(is ( equal (ping) "pong"))
+	(is ( equal (echo "5am echo test") "5am echo test")))
