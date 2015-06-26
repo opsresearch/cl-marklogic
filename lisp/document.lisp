@@ -55,4 +55,7 @@
 				(cons "uri" uri)
 				(cons "database" database))))
 
+(defun ingest-directory (database-name path &key (clear nil))	T)
+
+
 

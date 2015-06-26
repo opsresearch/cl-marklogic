@@ -1,4 +1,4 @@
-;;;; cl-marklogic.asd
+;;;; app.lisp
 
 ;;;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -18,23 +18,23 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;;;
 
-(asdf:defsystem #:cl-marklogic
-  :description "Common Lisp library for accessing MarkLogic Server."
-  :author "Donald Anderson <dranderson@OpsResearch.com>"
-  :license "LGPL3"
-  :depends-on (
-    #:drakma
-    #:local-time
-    #:fiveam)
-  :serial t
-  :components ((:file "package")
-               (:file "cl-marklogic")
-               (:file "lisp/database")
-               (:file "lisp/forest")
-               (:file "lisp/host")
-               (:file "lisp/rest-api")
-               (:file "lisp/xquery")
-               (:file "lisp/document")
-               (:file "lisp/project")
-               (:file "lisp/test")
-               ))
+(in-package #:cl-marklogic)
+
+(defun install-database (database-name)	T)
+(defun install-rest-server (server-name port database-name modules-database-name)	T)
+
+(defun ingest-base-data (database-name &key (clear nil))
+	(let ((path
+		(merge-pathnames
+			(make-pathname :directory '(:relative "data"))
+			(asdf:system-source-directory :cl-marklogic)
+			))))
+	(ingest-directory database-name path :clear clear))
+
+(defun ingest-base-modules (database-name &key (clear nil))
+	(let ((path
+		(merge-pathnames
+			(make-pathname :directory '(:relative "modules"))
+			(asdf:system-source-directory :cl-marklogic)
+			))))
+	(ingest-directory database-name path :clear clear))
