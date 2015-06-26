@@ -46,10 +46,11 @@
 		#:delete-document
 		#:put-document
 		#:post-documents
-		#:install-database
 		#:ingest-directory
-		#:ingest-base-data
-		#:ingest-base-modules
+		#:ingest-source-directory
+		#:install-database
+		#:install-base-data
+		#:install-base-modules
 		#:install-rest-server
   		#:test-all
 		))

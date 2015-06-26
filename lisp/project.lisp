@@ -23,18 +23,7 @@
 (defun install-database (database-name)	T)
 (defun install-rest-server (server-name port database-name modules-database-name)	T)
 
-(defun ingest-base-data (database-name &key (clear nil))
-	(let ((path
-		(merge-pathnames
-			(make-pathname :directory '(:relative "data"))
-			(asdf:system-source-directory :cl-marklogic)
-			))))
-	(ingest-directory database-name path :clear clear))
-
-(defun ingest-base-modules (database-name &key (clear nil))
-	(let ((path
-		(merge-pathnames
-			(make-pathname :directory '(:relative "modules"))
-			(asdf:system-source-directory :cl-marklogic)
-			))))
-	(ingest-directory database-name path :clear clear))
+(defun install-base-modules (database-name &key (clear nil))
+	(ingest-source-directory database-name :cl-marklogic "modules" :clear clear))
+(defun install-base-data (database-name &key (clear nil))
+	(ingest-source-directory database-name :cl-marklogic "data" :clear clear))
