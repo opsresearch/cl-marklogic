@@ -34,5 +34,6 @@
                (:file "lisp/host")
                (:file "lisp/rest-api")
                (:file "lisp/xquery")
+               (:file "lisp/document")
                (:file "lisp/test")
                ))

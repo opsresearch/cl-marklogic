@@ -45,11 +45,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Call API
 
-(defun call-rest-api( path &key (method :get) (parameters nil) (accept "application/json"))
+(defun call-rest-api( path &key (method :get) (parameters nil) (accept nil) (content nil))
 	"Creates a new database if it does not exist."
-	(let(
-		(content 
-			(babel:octets-to-string
 				 (drakma:http-request 
 					(format nil "~a://~a:~d~a" ;URI
 						(cdr (assoc :protocol *connection*))
@@ -58,11 +55,11 @@
 						path)
 					:method method 
 					:accept accept
+					:content content
 					:basic-authorization (list
 						(cdr (assoc :user *connection*))
 						(cdr (assoc :password *connection*)))
-					:parameters parameters))))
-	content))
+					:parameters parameters))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

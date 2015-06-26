@@ -67,10 +67,11 @@
 "Evaluate an XQuery string inlining includes and applying variables."
 (read-from-string
 	(extract-text-only
-		(call-rest-api (cdr (assoc :evaluate-path *connection*))
-			:method :post
-			:accept "multipart/mixed"
-			:parameters (list
-				(cons "xquery" (inline-includes xquery))
-				(cons "vars" (variables-to-json variables)))))))
+		(babel:octets-to-string
+			(call-rest-api (cdr (assoc :evaluate-path *connection*))
+				:method :post
+				:accept "multipart/mixed"
+				:parameters (list
+					(cons "xquery" (inline-includes xquery))
+					(cons "vars" (variables-to-json variables))))))))
 

@@ -41,6 +41,11 @@
 		#:database-create
 		#:forest-create
 		#:database-attach-forest
+		#:put-document
+		#:get-document
+		#:delete-document
+		#:put-document
+		#:post-documents
   		#:test-all
 		))
 

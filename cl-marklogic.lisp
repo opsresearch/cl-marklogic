@@ -28,6 +28,7 @@
 	(:host          . "localhost")
 	(:port          . 8000)
 	(:evaluate-path . "/LATEST/eval")
+	(:document-path . "/LATEST/documents")
   	(:user          . "admin")
   	(:password      . "passw0rd"))
 "This global parameter is an a-list used to initialize the global connection.")
