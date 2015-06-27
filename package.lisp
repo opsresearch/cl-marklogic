@@ -55,7 +55,7 @@
 		#:install-base-data
 		#:install-base-modules
 		#:install-rest-server
-  		#:test-all
+  		#:test-marklogic
 		))
 
 (local-time:enable-read-macros)

@@ -20,9 +20,9 @@
 
 (in-package #:cl-marklogic)
 
-(defun test-all ()
-  (5am:explain! (5am:run 'test-all)))
+(defun test-marklogic ()
+  (5am:explain! (5am:run 'test-marklogic)))
 
-(5am:test test-all
+(5am:test test-marklogic
 	(5am:is ( equal (ping) "pong"))
 	(5am:is ( equal (echo "5am echo test") "5am echo test")))
