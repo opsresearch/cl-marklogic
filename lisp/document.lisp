@@ -58,10 +58,10 @@
 (defun ingest-source-directory (database-name system dir-name &key (clear nil))
 	(let ((path
 		(merge-pathnames
-			(make-pathname :directory '(:relative dir-name))
+			(make-pathname :directory `(:relative ,dir-name))
 			(asdf:system-source-directory system)
-			))))
-	(ingest-directory database-name path :clear clear))
+			)))
+	(ingest-directory database-name path :clear clear)))
 
 (defun ingest-directory (database-name path &key (clear nil))	T)
 

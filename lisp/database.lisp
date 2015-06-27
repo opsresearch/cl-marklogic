@@ -21,6 +21,16 @@
 (in-package #:cl-marklogic)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun database-names (&optional (database-info (get-database-info)))
+	"Returns a list the database names in the cluster."
+	(mapcar (lambda (entry) (cdr (assoc :database-name (cdr entry)))) database-info))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun database-name-p (database-name &optional (database-info (get-database-info)))
+	"Returns T if database-name exists or nil if not."
+	(find database-name (database-names database-info) :test #'equal))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun database-ids (&optional (database-info (get-database-info)))
 	"Returns a list the database ids in the cluster."
 	(mapcar #'car database-info))

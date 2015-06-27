@@ -24,13 +24,14 @@
 ;; Initial value for the global default connection
 
 (defparameter *initial-connection* '(
-	(:protocol      . "http")
-	(:host          . "localhost")
-	(:port          . 8000)
-	(:evaluate-path . "/LATEST/eval")
-	(:document-path . "/LATEST/documents")
-  	(:user          . "admin")
-  	(:password      . "passw0rd"))
+	(:protocol      	. "http")
+	(:host          	. "localhost")
+	(:port          	. 8000)
+	(:evaluate-path 	. "/LATEST/eval")
+	(:document-path 	. "/LATEST/documents")
+	(:rest-apis-path 	. "/LATEST/rest-apis")
+  	(:user          	. "admin")
+  	(:password      	. "passw0rd"))
 "This global parameter is an a-list used to initialize the global connection.")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

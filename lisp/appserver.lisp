@@ -1,4 +1,4 @@
-;;;; package.lisp
+;;;; appserver.lisp
 
 ;;;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -18,44 +18,28 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;;;
 
-(defpackage #:cl-marklogic
-	(:use #:cl)
-	(:export
-		#:set-connection
-		#:get-connection
-		#:with-connection
-		#:ping
-		#:echo
-		#:get-host-info
-		#:host-ids
-		#:host-property
-		#:get-forest-info
-		#:get-forest-status
-		#:forest-ids
-		#:forest-property
-		#:get-database-info
-		#:database-ids
-		#:database-names
-		#:database-name-p
-		#:database-property
-		#:evaluate-xquery
-		#:host-time
-		#:rest-api-create
-		#:database-create
-		#:forest-create
-		#:database-attach-forest
-		#:put-document
-		#:get-document
-		#:delete-document
-		#:put-document
-		#:post-documents
-		#:ingest-directory
-		#:ingest-source-directory
-		#:install-database
-		#:install-base-data
-		#:install-base-modules
-		#:install-rest-server
-  		#:test-all
-		))
+(in-package #:cl-marklogic)
 
-(local-time:enable-read-macros)
+(defun rest-api-create (group-name server-name port database-name modules-database-name)
+"Create a REST API server."
+    (let ((json
+        (format nil
+            "{ \"rest-api\": {
+                \"group\": \"~A\",
+                \"name\": \"~A\",
+                \"database\": \"~A\",
+                \"modules-database\": \"~A\",
+                \"port\": \"~A\"
+                }
+            }" group-name server-name database-name modules-database-name port)))
+
+    (let ((resp
+        (call-rest-api (cdr (assoc :rest-apis-path *connection*))
+    		:method :post
+    		:accept "application/json"
+            :content-type "application/json"
+    		:content json)))
+
+    (if resp (babel:octets-to-string resp) nil))))
+
+

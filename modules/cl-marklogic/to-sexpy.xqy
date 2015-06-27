@@ -19,9 +19,9 @@
 ;;;; ;;;;; END LICENSE BLOCK ;;;:)
 
 xquery version "1.0-ml";
-declare namespace clml = "http://opsresearch.com/cl-marklogic";
+module namespace clml = "http://opsresearch.com/cl-marklogic";
 
-declare function clml:to-sexpy($v) {
+declare function to-sexpy($v) {
   local:to-sexpy($v)
 };
 

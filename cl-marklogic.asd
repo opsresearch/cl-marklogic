@@ -30,6 +30,7 @@
   :components ((:file "package")
                (:file "cl-marklogic")
                (:file "lisp/database")
+               (:file "lisp/appserver")
                (:file "lisp/forest")
                (:file "lisp/host")
                (:file "lisp/rest-api")

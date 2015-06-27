@@ -20,8 +20,11 @@
 
 (in-package #:cl-marklogic)
 
-(defun install-database (database-name)	T)
-(defun install-rest-server (server-name port database-name modules-database-name)	T)
+(defun install-database (database-name &key (forest-create-name nil))	
+	(unless (database-name-p database-name) (database-create database-name :forest-create-name forest-create-name)))
+
+(defun install-rest-server (group-name server-name port database-name modules-database-name)
+	(rest-api-create group-name server-name port database-name modules-database-name))
 
 (defun install-base-modules (database-name &key (clear nil))
 	(ingest-source-directory database-name :cl-marklogic "modules" :clear clear))

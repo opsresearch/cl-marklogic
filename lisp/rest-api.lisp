@@ -20,6 +20,8 @@
 
 (in-package #:cl-marklogic)
 
+;(setf drakma:*header-stream* *standard-output*)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Response processing
 
@@ -44,22 +46,21 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Call API
-
-(defun call-rest-api( path &key (method :get) (parameters nil) (accept nil) (content nil))
-	"Creates a new database if it does not exist."
-				 (drakma:http-request 
-					(format nil "~a://~a:~d~a" ;URI
-						(cdr (assoc :protocol *connection*))
-						(cdr (assoc :host *connection*))
-						(cdr (assoc :port *connection*))
-						path)
-					:method method 
-					:accept accept
-					:content content
-					:basic-authorization (list
-						(cdr (assoc :user *connection*))
-						(cdr (assoc :password *connection*)))
-					:parameters parameters))
+(defun call-rest-api( path &key (method :get) (parameters nil) (accept nil) (content nil) (content-type "application/json"))
+	 (drakma:http-request 
+		(format nil "~a://~a:~d~a" ;URI
+			(cdr (assoc :protocol *connection*))
+			(cdr (assoc :host *connection*))
+			(cdr (assoc :port *connection*))
+			path)
+		:method method 
+		;:accept accept
+		:content content
+		:content-type content-type
+		:basic-authorization (list
+			(cdr (assoc :user *connection*))
+			(cdr (assoc :password *connection*)))
+		:parameters parameters))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
