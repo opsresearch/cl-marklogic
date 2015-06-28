@@ -58,4 +58,6 @@
   		#:test-marklogic
 		))
 
-(local-time:enable-read-macros)
+(eval-when (:compile-toplevel :load-toplevel :execute)
+	(local-time:enable-read-macros))
+
