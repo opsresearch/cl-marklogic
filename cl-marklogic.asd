@@ -29,13 +29,13 @@
   :serial t
   :components ((:file "package")
                (:file "cl-marklogic")
-               (:file "lisp/database")
-               (:file "lisp/appserver")
-               (:file "lisp/forest")
-               (:file "lisp/host")
-               (:file "lisp/rest-api")
-               (:file "lisp/xquery")
-               (:file "lisp/document")
-               (:file "lisp/project")
-               (:file "lisp/test")
-               ))
+               (:module lisp
+                  :serial t
+                  :components ((:file "database")
+                              (:file "appserver")
+                              (:file "forest")
+                              (:file "host")
+                              (:file "rest-api")
+                              (:file "xquery")
+                              (:file "document")
+                              (:file "project")))))
