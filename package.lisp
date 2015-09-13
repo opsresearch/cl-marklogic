@@ -55,7 +55,6 @@
     #:install-base-data
     #:install-base-modules
     #:install-rest-server
-      #:test-marklogic
     ))
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
