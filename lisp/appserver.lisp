@@ -21,25 +21,23 @@
 (in-package #:cl-marklogic)
 
 (defun rest-api-create (group-name server-name port database-name modules-database-name)
-"Create a REST API server."
-    (let ((json
-        (format nil
-            "{ \"rest-api\": {
-                \"group\": \"~A\",
-                \"name\": \"~A\",
-                \"database\": \"~A\",
-                \"modules-database\": \"~A\",
-                \"port\": \"~A\"
-                }
-            }" group-name server-name database-name modules-database-name port)))
-
+  "Create a REST API server."
+  (let ((json
+          (format nil
+                  "{ \"rest-api\": {
+                  \"group\": \"~A\",
+                  \"name\": \"~A\",
+                  \"database\": \"~A\",
+                  \"modules-database\": \"~A\",
+                  \"port\": \"~A\"
+                  }
+                  }" group-name server-name database-name modules-database-name port)))
     (let ((resp
-        (call-rest-api (cdr (assoc :rest-apis-path *connection*))
-    		:method :post
-    		:accept "application/json"
-            :content-type "application/json"
-    		:content json)))
-
-    (if resp (babel:octets-to-string resp) nil))))
+            (call-rest-api (cdr (assoc :rest-apis-path *connection*))
+                           :method :post
+                           :accept "application/json"
+                           :content-type "application/json"
+                           :content json)))
+      (if resp (babel:octets-to-string resp) nil))))
 
 

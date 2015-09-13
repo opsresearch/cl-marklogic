@@ -22,17 +22,17 @@
   :description "Tests for the system cl-marklogic"
   :author "Donald Anderson <dranderson@opsresearch.com>"
   :license "GPL3"
-  :depends-on(
-	#:fiveam
-	#:cl-marklogic
-	#:ml-optimizer)
+  :depends-on
+    (#:fiveam
+    #:cl-marklogic
+    #:ml-optimizer)
   :serial t
-  :components (
-	(:file "package")
-	(:module tests
-		:serial t
-		:components ((:file "test-marklogic")
-					(:file "test-optimizer")
-					(:file "test")))
-	(:file "ml-test")))
+  :components
+    ((:file "package")
+      (:module tests
+      :serial t
+      :components ((:file "test-marklogic")
+      (:file "test-optimizer")
+      (:file "test")))
+    (:file "ml-test")))
 

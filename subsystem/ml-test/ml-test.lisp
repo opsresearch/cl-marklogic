@@ -20,5 +20,3 @@
 
 (in-package #:ml-test)
 
-;;; "ml-test" goes here. Hacks and glory await!
-

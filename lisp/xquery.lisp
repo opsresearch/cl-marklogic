@@ -30,48 +30,42 @@
 
 
 (defun read-include (include)
-	(with-open-file (stream 
-		(merge-pathnames
-			(make-pathname :directory '(:relative "xquery") :name include :type "xqy")
-			(asdf:system-source-directory :cl-marklogic)
-			))
- 		(read-stream stream)))
+  (with-open-file (stream 
+                    (merge-pathnames
+                      (make-pathname :directory '(:relative "xquery") :name include :type "xqy")
+                      (asdf:system-source-directory :cl-marklogic)
+                      ))
+                  (read-stream stream)))
 
 (defun variables-to-json (variables)
-	(format nil "{ ~{~a~^,~} }"
-		(mapcar 
-			(lambda (it) (format nil "\"~A\":\"~A\" " (car it) (cdr it))) 
-			variables)))
+  (format nil "{ ~{~a~^,~} }"
+          (mapcar 
+            (lambda (it) (format nil "\"~A\":\"~A\" " (car it) (cdr it))) 
+            variables)))
 
 (defun inline-includes (xquery)
-	(let (
-		(begin (search "(:#include " xquery)))
-	
-	(if begin 
-		(let (
-			(file-begin (search " " xquery :start2 begin))
-			(end (search ":)" xquery :start2 begin)))
-			
-				(inline-includes 
-					(format nil "~A~A~A"
-						(subseq xquery 0 begin)
-						(read-include (string-trim " " (subseq xquery file-begin end )))
-						(subseq xquery (+ 2 end))
-						)))
-		xquery )))
+  (let ((begin (search "(:#include " xquery)))
+    (if begin 
+        (let ((file-begin (search " " xquery :start2 begin))
+              (end (search ":)" xquery :start2 begin)))
+          (inline-includes 
+            (format nil "~A~A~A"
+                    (subseq xquery 0 begin)
+                    (read-include (string-trim " " (subseq xquery file-begin end )))
+                    (subseq xquery (+ 2 end)))))
+        xquery)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Evaluate an XQuery string
-
 (defun evaluate-xquery(xquery &optional (variables () ))
-"Evaluate an XQuery string inlining includes and applying variables."
-(read-from-string
-	(extract-text-only
-		(babel:octets-to-string
-			(call-rest-api (cdr (assoc :evaluate-path *connection*))
-				:method :post
-				:accept "multipart/mixed"
-				:parameters (list
-					(cons "xquery" (inline-includes xquery))
-					(cons "vars" (variables-to-json variables))))))))
+  "Evaluate an XQuery string inlining includes and applying variables."
+  (read-from-string
+    (extract-text-only
+      (babel:octets-to-string
+        (call-rest-api (cdr (assoc :evaluate-path *connection*))
+                       :method :post
+                       :accept "multipart/mixed"
+                       :parameters (list
+                                     (cons "xquery" (inline-includes xquery))
+                                     (cons "vars" (variables-to-json variables))))))))
 

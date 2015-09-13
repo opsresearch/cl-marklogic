@@ -24,44 +24,44 @@
 ;; Query processing
 
 (defun octets-to-string (octets)
-	(if octets (babel:octets-to-string octets) octets))
+  (if octets (babel:octets-to-string octets) octets))
 
 (defun put-document(uri content content-type &key (database nil) )
-"Put a document by URI."
+  "Put a document by URI."
 		(call-rest-api (cdr (assoc :document-path *connection*))
-			:method :put
-			:accept "appliation/json"
-			:content content
-			:parameters (list
-				(cons "uri" uri)
-				(cons "database" database)
-				)))
+                 :method :put
+                 :accept "appliation/json"
+                 :content content
+                 :parameters (list
+                               (cons "uri" uri)
+                               (cons "database" database)
+                               )))
 
 (defun get-document(uri &key (accept nil) (database nil))
-"Get a document by URI."
-	(call-rest-api (cdr (assoc :document-path *connection*))
-		:method :get
-		:accept accept
-		:parameters (list
-			(cons "uri" uri)
-				(cons "database" database))))
+  "Get a document by URI."
+  (call-rest-api (cdr (assoc :document-path *connection*))
+                 :method :get
+                 :accept accept
+                 :parameters (list
+                               (cons "uri" uri)
+                               (cons "database" database))))
 
 (defun delete-document(uri &key (database nil))
-"Delete a document BY URI."
+  "Delete a document BY URI."
 		(call-rest-api (cdr (assoc :document-path *connection*))
-			:method :delete
-			:accept "appliation/json"
-			:parameters (list
-				(cons "uri" uri)
-				(cons "database" database))))
+                 :method :delete
+                 :accept "appliation/json"
+                 :parameters (list
+                               (cons "uri" uri)
+                               (cons "database" database))))
 
 (defun ingest-source-directory (database-name system dir-name &key (clear nil))
-	(let ((path
-		(merge-pathnames
-			(make-pathname :directory `(:relative ,dir-name))
-			(asdf:system-source-directory system)
-			)))
-	(ingest-directory database-name path :clear clear)))
+  (let ((path
+          (merge-pathnames
+            (make-pathname :directory `(:relative ,dir-name))
+            (asdf:system-source-directory system)
+            )))
+    (ingest-directory database-name path :clear clear)))
 
 (defun ingest-directory (database-name path &key (clear nil))	T)
 

@@ -23,11 +23,12 @@
   :description "Common Lisp application to optimize MarkLogic clusters."
   :author "Donald Anderson <dranderson@OpsResearch.com>"
   :license "AGPL3"
-  :depends-on (
-  		#:hunchentoot
-  		#:cl-marklogic
-  		#:cl-opsresearch)
+  :depends-on
+    (#:hunchentoot
+     #:cl-marklogic
+     #:cl-opsresearch)
   :serial t
-  :components ((:file "package")
-               (:file "ml-optimizer")))
+  :components
+    ((:file "package")
+     (:file "ml-optimizer")))
 

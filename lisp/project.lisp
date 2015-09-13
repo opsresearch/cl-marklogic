@@ -28,5 +28,6 @@
 
 (defun install-base-modules (database-name &key (clear nil))
 	(ingest-source-directory database-name :cl-marklogic "modules" :clear clear))
+
 (defun install-base-data (database-name &key (clear nil))
 	(ingest-source-directory database-name :cl-marklogic "data" :clear clear))

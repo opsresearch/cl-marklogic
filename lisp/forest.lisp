@@ -22,22 +22,22 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun forest-ids (&optional (forest-info (get-forest-info)))
-	"Returns a list the forest ids in the cluster."
-	(mapcar #'car forest-info))
+  "Returns a list the forest ids in the cluster."
+  (mapcar #'car forest-info))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun forest-property (forest-id property &optional (forest-info (get-forest-info)))
-	"Returns the value of a forest property given the forest-id and property.
-	The available properties are:
-	  :time-stamp         -> The date and time this a-list was created.
-	  :forest-ids         -> Id of this forest.
-	  :forest-name        -> String name of the forest.
-	  :host-id            -> Id of the host holding the forest.
-	  :database-id        -> Id of the database composed from the forest.
-	  :replicas           -> List of the ids of this forest's replicas.
-	  :data-dir  	      -> Path of the normal data directory.
-	  :large-dir          -> Path of the large data directory.
-	  :fast-dir           -> Path of the fast data directory.
+  "Returns the value of a forest property given the forest-id and property.
+    The available properties are:
+      :time-stamp         -> The date and time this a-list was created.
+      :forest-ids         -> Id of this forest.
+      :forest-name        -> String name of the forest.
+      :host-id            -> Id of the host holding the forest.
+      :database-id        -> Id of the database composed from the forest.
+      :replicas           -> List of the ids of this forest's replicas.
+      :data-dir           -> Path of the normal data directory.
+      :large-dir          -> Path of the large data directory.
+      :fast-dir           -> Path of the fast data directory.
       :master-forest      -> Id of the master forest.
       :journals-size      -> Size of the journals on disk (MB).
       :large-data-size    -> Size of the large data on disk (MB).
@@ -48,68 +48,69 @@
       :device-space       -> Available space on the normal device (MB).
       :large-device-space -> Available space on the large device (MB).
       :fast-device-space  -> Available space on the fast device (MB).
-	 "
-	(cdr (assoc property (cdr (assoc forest-id forest-info)))))
+  "
+  (cdr (assoc property (cdr (assoc forest-id forest-info)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun get-forest-info()
-	"Returns two tier nested a-lists containing properties of all of the forests in the cluster."
-	(evaluate-xquery
-		"
-	    xquery version '1.0-ml';
-	    import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
-	    declare namespace fs = 'http://marklogic.com/xdmp/status/forest';
-   		(:#include to-sexpy :)
-	    (:#include forest-info :)
-	    local:to-sexpy(local:forest-info())
-	    "
-	    ))
+  "Returns two tier nested a-lists containing properties of all of the forests in the cluster."
+  (evaluate-xquery
+    "
+    xquery version '1.0-ml';
+    import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
+    declare namespace fs = 'http://marklogic.com/xdmp/status/forest';
+    (:#include to-sexpy :)
+    (:#include forest-info :)
+    local:to-sexpy(local:forest-info())
+    "
+    ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun get-forest-status(forest-id)
-	"Returns the complete XML representation of the forest's status."
-	(evaluate-xquery
-		"
-	    xquery version '1.0-ml';
-		declare variable $forest-id as xs:string external;
-		(:#include to-sexpy :)
-		local:to-sexpy(xdmp:forest-status(xs:unsignedLong($forest-id)))
-		"
-		(list (cons "forest-id" forest-id))
-	    ))
+  "Returns the complete XML representation of the forest's status."
+  (evaluate-xquery
+    "
+    xquery version '1.0-ml';
+    declare variable $forest-id as xs:string external;
+    (:#include to-sexpy :)
+    local:to-sexpy(xdmp:forest-status(xs:unsignedLong($forest-id)))
+    "
+    (list (cons "forest-id" forest-id))
+    ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun forest-create(forest-name &key (host-name nil) (data-directory nil) (large-data-directory nil) (fast-data-directory nil))
-	"Creates a new forest."
-
-	(evaluate-xquery "
-	    xquery version '1.0-ml';
-	    import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
-	    declare variable $forest-name as xs:string external;
-	    declare variable $host-name as xs:string external;
-	    declare variable $data-directory as xs:string external;
-	    declare variable $large-data-directory as xs:string external;
-	    declare variable $fast-data-directory as xs:string external;
-	    (:#include to-sexpy :)
-
-		let $config := admin:get-configuration()
-      	let $host-id := 				if ($host-name = 'NIL') then xdmp:host() else admin:host-get-id($config, $host-name)
-	    let $data-directory :=  		if($data-directory = 'NIL') then () else $data-directory
-	    let $fast-data-directory :=  	if($fast-data-directory = 'NIL') then () else $fast-data-directory
-	    let $large-data-directory :=  	if($large-data-directory = 'NIL') then () else $large-data-directory
-
-	    let $config := admin:forest-create($config, $forest-name, $host-id, $data-directory, $large-data-directory, $fast-data-directory)
-	    let $_ := admin:save-configuration($config)
-	    return local:to-sexpy($forest-name)
-	    "
-	    (list 
-	    	(cons "forest-name" forest-name)
-	    	(cons "host-name" host-name)
-	    	(cons "data-directory" data-directory)
-	    	(cons "large-data-directory" large-data-directory)
-	    	(cons "fast-data-directory" fast-data-directory)
-	    	))
-	)
+  "Creates a new forest."
+  
+  (evaluate-xquery 
+    "
+    xquery version '1.0-ml';
+    import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
+    declare variable $forest-name as xs:string external;
+    declare variable $host-name as xs:string external;
+    declare variable $data-directory as xs:string external;
+    declare variable $large-data-directory as xs:string external;
+    declare variable $fast-data-directory as xs:string external;
+    (:#include to-sexpy :)
+    
+    let $config := admin:get-configuration()
+    let $host-id :=        if ($host-name = 'NIL') then xdmp:host() else admin:host-get-id($config, $host-name)
+    let $data-directory :=     if($data-directory = 'NIL') then () else $data-directory
+    let $fast-data-directory :=    if($fast-data-directory = 'NIL') then () else $fast-data-directory
+    let $large-data-directory :=   if($large-data-directory = 'NIL') then () else $large-data-directory
+    
+    let $config := admin:forest-create($config, $forest-name, $host-id, $data-directory, $large-data-directory, $fast-data-directory)
+    let $_ := admin:save-configuration($config)
+    return local:to-sexpy($forest-name)
+    "
+    (list 
+      (cons "forest-name" forest-name)
+      (cons "host-name" host-name)
+      (cons "data-directory" data-directory)
+      (cons "large-data-directory" large-data-directory)
+      (cons "fast-data-directory" fast-data-directory)
+      ))
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

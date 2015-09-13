@@ -21,8 +21,8 @@
 (defpackage #:ml-test
   (:use #:cl)
   (:export 
-  	#:test-all
-  	#:test-marklogic
-  	#:test-optimizer
-  	))
+    #:test-all
+    #:test-marklogic
+    #:test-optimizer
+    ))
 

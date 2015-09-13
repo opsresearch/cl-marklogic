@@ -26,41 +26,39 @@
 ;; Response processing
 
 (defun find-multi-marker (content)
-	(let (
-		(start (search "--" content)))
-	(subseq content
-	 start
-	 (search (format nil "~C~C" #\return #\linefeed) content :start2 start)
-	 )))
+  (let ((start (search "--" content)))
+    (subseq content
+            start
+            (search (format nil "~C~C" #\return #\linefeed) content :start2 start)
+            )))
 
 (defun calc-text-offset (content)
-	(+ 4 (search 
-		(format nil "~C~C~C~C" #\return #\linefeed #\return #\linefeed)
-		content)))
+  (+ 4 (search 
+         (format nil "~C~C~C~C" #\return #\linefeed #\return #\linefeed)
+         content)))
 
 (defun extract-text-only (content)
-	(let(
-		(offset (calc-text-offset content))
-		(end-marker (format nil "~A--" (find-multi-marker content))))
-			(subseq content offset (+ -2 (search end-marker content :start2 offset)))))
+  (let ((offset (calc-text-offset content))
+        (end-marker (format nil "~A--" (find-multi-marker content))))
+    (subseq content offset (+ -2 (search end-marker content :start2 offset)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Call API
 (defun call-rest-api( path &key (method :get) (parameters nil) (accept nil) (content nil) (content-type "application/json"))
 	 (drakma:http-request 
-		(format nil "~a://~a:~d~a" ;URI
-			(cdr (assoc :protocol *connection*))
-			(cdr (assoc :host *connection*))
-			(cdr (assoc :port *connection*))
-			path)
-		:method method 
-		;:accept accept
-		:content content
-		:content-type content-type
-		:basic-authorization (list
-			(cdr (assoc :user *connection*))
-			(cdr (assoc :password *connection*)))
-		:parameters parameters))
+    (format nil "~a://~a:~d~a" ;URI
+            (cdr (assoc :protocol *connection*))
+            (cdr (assoc :host *connection*))
+            (cdr (assoc :port *connection*))
+            path)
+    :method method 
+    ;:accept accept
+    :content content
+    :content-type content-type
+    :basic-authorization (list
+                           (cdr (assoc :user *connection*))
+                           (cdr (assoc :password *connection*)))
+    :parameters parameters))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
