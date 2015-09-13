@@ -20,9 +20,6 @@
 
 (in-package #:cl-marklogic)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Query processing
-
 (defun octets-to-string (octets)
   (if octets (babel:octets-to-string octets) octets))
 

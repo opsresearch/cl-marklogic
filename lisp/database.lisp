@@ -20,35 +20,30 @@
 
 (in-package #:cl-marklogic)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun database-names (&optional (database-info (get-database-info)))
-  "Returns a list the database names in the cluster."
+  "Get a list the database names in the cluster."
   (mapcar (lambda (entry) (cdr (assoc :database-name (cdr entry)))) database-info))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun database-name-p (database-name &optional (database-info (get-database-info)))
-  "Returns T if database-name exists or nil if not."
+  "Get T if database-name exists or nil if not."
   (find database-name (database-names database-info) :test #'equal))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun database-ids (&optional (database-info (get-database-info)))
-  "Returns a list the database ids in the cluster."
+  "Get a list the database ids in the cluster."
   (mapcar #'car database-info))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun database-property (database-id property &optional (database-info (get-database-info)))
-  "Returns the value of a database property given the database-id and property.
-  The available properties are:
-  :time-stamp      -> The date and time this a-list was created.
-  :forest-ids      -> Id of this database.
-  :database-name   -> String name of the database.
-  :forests         -> Attached forest IDs.
+  "Get the value of a database property given the database-id and property.
+    The available properties are:
+      :time-stamp      -> The date and time this a-list was created.
+      :forest-ids      -> Id of this database.
+      :database-name   -> String name of the database.
+      :forests         -> Attached forest IDs.
   "
   (cdr (assoc property (cdr (assoc database-id database-info)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun get-database-info()
-  "Returns two tier nested a-lists containing properties of all of the databases in the cluster."
+  "Get a two tier nested a-lists containing properties of all of the databases in the cluster."
   (evaluate-xquery 
     "
     xquery version '1.0-ml';
@@ -59,25 +54,24 @@
     "
     ))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun database-create(database-name &key 
                                      (security-database-name "Security") 
                                      (schemas-database-name "Schemas") 
                                      (forest-attach-name nil) 
                                      (forest-create-name nil)
                                      (database-attach-name nil))
-  "Creates a new database."
+  "Creat a new database."
   
-  ; create new forests if supplied
+  ;; create new forests if supplied
   (if (listp forest-create-name) 
       (mapcar #'forest-create forest-create-name)
       (forest-create forest-create-name))
   
-  ; setup to attach attach new forests if created
+  ;; setup to attach attach new forests if created
   (when forest-create-name 
     (setf forest-attach-name forest-create-name))
   
-  ; create new database
+  ;; create new database
   (evaluate-xquery 
     "
     xquery version '1.0-ml';
@@ -99,12 +93,12 @@
       (cons "schemas-database-name" schemas-database-name)
       ))
   
-  ; attach any sub-databases
+  ;; attach any sub-databases
   (if (listp database-attach-name) 
       (mapcar (lambda (name) (database-attach-sub-database database-name name)) database-attach-name)
       (database-attach-sub-database database-name database-attach-name))
   
-  ; attach any forests
+  ;; attach any forests
   (if (listp forest-attach-name) 
       (mapcar (lambda (name) (database-attach-forest database-name name)) forest-attach-name)
       (database-attach-forest database-name forest-attach-name))
@@ -115,8 +109,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun database-attach-forest(database-name forest-name)
-  "Attaches a forest to a database."
-  
+  "Attach a forest to a database."
   (evaluate-xquery 
     "
     xquery version '1.0-ml';
@@ -139,8 +132,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun database-attach-sub-database(database-name sub-database-name)
-  "Attaches a sub-database to a database."
-  
+  "Attach a sub-database to a database."
   (evaluate-xquery 
     "
     xquery version '1.0-ml';

@@ -20,14 +20,12 @@
 
 (in-package #:cl-marklogic)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun forest-ids (&optional (forest-info (get-forest-info)))
-  "Returns a list the forest ids in the cluster."
+  "Get a list of the forest ids in the cluster."
   (mapcar #'car forest-info))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun forest-property (forest-id property &optional (forest-info (get-forest-info)))
-  "Returns the value of a forest property given the forest-id and property.
+  "Get the value of a forest property given the forest-id and property.
     The available properties are:
       :time-stamp         -> The date and time this a-list was created.
       :forest-ids         -> Id of this forest.
@@ -51,9 +49,8 @@
   "
   (cdr (assoc property (cdr (assoc forest-id forest-info)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun get-forest-info()
-  "Returns two tier nested a-lists containing properties of all of the forests in the cluster."
+  "Get a two tier nested a-lists containing properties of all of the forests in the cluster."
   (evaluate-xquery
     "
     xquery version '1.0-ml';
@@ -65,9 +62,8 @@
     "
     ))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun get-forest-status(forest-id)
-  "Returns the complete XML representation of the forest's status."
+  "Get the complete XML representation of the forest's status."
   (evaluate-xquery
     "
     xquery version '1.0-ml';
@@ -78,10 +74,8 @@
     (list (cons "forest-id" forest-id))
     ))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun forest-create(forest-name &key (host-name nil) (data-directory nil) (large-data-directory nil) (fast-data-directory nil))
-  "Creates a new forest."
-  
+  "Create a new forest."
   (evaluate-xquery 
     "
     xquery version '1.0-ml';
@@ -111,6 +105,4 @@
       (cons "fast-data-directory" fast-data-directory)
       ))
   )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

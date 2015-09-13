@@ -22,9 +22,6 @@
 
 ;(setf drakma:*header-stream* *standard-output*)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Response processing
-
 (defun find-multi-marker (content)
   (let ((start (search "--" content)))
     (subseq content
@@ -42,8 +39,6 @@
         (end-marker (format nil "~A--" (find-multi-marker content))))
     (subseq content offset (+ -2 (search end-marker content :start2 offset)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Call API
 (defun call-rest-api( path &key (method :get) (parameters nil) (accept nil) (content nil) (content-type "application/json"))
 	 (drakma:http-request 
     (format nil "~a://~a:~d~a" ;URI
@@ -59,7 +54,5 @@
                            (cdr (assoc :user *connection*))
                            (cdr (assoc :password *connection*)))
     :parameters parameters))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 

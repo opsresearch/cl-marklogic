@@ -20,9 +20,6 @@
 
 (in-package #:cl-marklogic)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Query processing
-
 (defun read-stream (stream)
   (let ((seq (make-array (file-length stream) :element-type 'character :fill-pointer t)))
     (setf (fill-pointer seq) (read-sequence seq stream))
@@ -55,8 +52,6 @@
                     (subseq xquery (+ 2 end)))))
         xquery)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Evaluate an XQuery string
 (defun evaluate-xquery(xquery &optional (variables () ))
   "Evaluate an XQuery string inlining includes and applying variables."
   (read-from-string

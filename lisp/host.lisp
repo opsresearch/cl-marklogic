@@ -20,14 +20,13 @@
 
 (in-package #:cl-marklogic)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun host-ids (&optional (host-info (get-host-info)))
-  "Returns a list the host ids in the cluster."
+  "Get a list the host ids in the cluster."
   (mapcar #'car host-info))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun host-property (host-id property &optional (host-info (get-host-info)))
-  "Returns the value of a host property given the host-id and property.
+  "Get the value of a host property given the host-id and property.
     The available properties are:
       :time-stamp -> The date and time this a-list was created.
       :host-id    -> Id of this host.
@@ -38,9 +37,8 @@
   "
   (cdr (assoc property (cdr (assoc host-id host-info)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun get-host-info()
-  "Returns two tier nested a-lists containing properties of all of the hosts in the cluster."
+  "Get a two tier nested a-lists containing properties of all of the hosts in the cluster."
   (evaluate-xquery 
     "
     xquery version '1.0-ml';
@@ -50,7 +48,5 @@
     local:to-sexpy(local:host-info())
     "
     ))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
