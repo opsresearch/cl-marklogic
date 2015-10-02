@@ -1,4 +1,4 @@
-;;;; app.lisp
+;;;; application.lisp
 
 ;;;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 

@@ -20,33 +20,6 @@
 
 (in-package #:cl-marklogic)
 
-(defparameter *initial-connection* 
-  '((:protocol        . "http")
-    (:host            . "localhost")
-    (:port            . 8000)
-    (:evaluate-path   . "/LATEST/eval")
-    (:document-path   . "/LATEST/documents")
-    (:rest-apis-path  . "/LATEST/rest-apis")
-    (:user            . "admin")
-    (:password        . "passw0rd"))
-  "A-list used to initialize the global connection.")
-
-(defvar *connection* *initial-connection*
-  "A-list used by default to connect.
-  The macro with-connection can be used to override the connection.")
-
-(defun get-initial-connection()
-  "Get the connection that is used to initialize the global connection."
-  *initial-connection*)
-
-(defun get-connection()
-  "Get the global connection value."
-  *connection*)
-
-(defun set-connection(new-value)
-  "Set the global connection value."
-  (setf *connection* new-value))
-
 (defun ping()
   "Receive the string \"pong\" echoed back from the server."
   (evaluate-xquery 
@@ -78,8 +51,3 @@
     "
     ))
 
-(defmacro with-connection ((connection-value) &body body)
-  "Bind `connection-value` to *connection* to override the global connection a-list."
-  `(let ((*connection* ,connection-value))
-     (progn
-       ,@body)))

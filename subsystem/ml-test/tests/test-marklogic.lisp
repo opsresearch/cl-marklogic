@@ -25,4 +25,5 @@
 
 (5am:test test-marklogic
 	(5am:is ( equal (cl-marklogic:ping) "pong"))
-	(5am:is ( equal (cl-marklogic:echo "5am echo test") "5am echo test")))
+	(5am:is ( equal (cl-marklogic:echo "5am echo test") "5am echo test"))
+  (5am:is ( cl-marklogic:database-name-p "Documents")))

@@ -21,9 +21,6 @@
 (defpackage #:cl-marklogic
   (:use #:cl)
   (:export
-    #:set-connection
-    #:get-connection
-    #:with-connection
     #:ping
     #:echo
     #:get-host-info
@@ -55,6 +52,16 @@
     #:install-base-data
     #:install-base-modules
     #:install-rest-server
+    ))
+
+(defpackage #:ml-rest
+  (:use #:cl)
+  (:export
+    #:call
+    #:eval-xquery
+    #:set-connection
+    #:get-connection
+    #:with-connection
     ))
 
 (eval-when (:compile-toplevel :load-toplevel :execute)

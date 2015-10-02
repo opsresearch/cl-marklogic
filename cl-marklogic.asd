@@ -30,14 +30,19 @@
   :components 
     ((:file "package")
      (:file "cl-marklogic")
-     (:module lisp
+     (:module utils
         :serial t
         :components 
           ((:file "database")
            (:file "appserver")
            (:file "forest")
            (:file "host")
-           (:file "rest-api")
            (:file "xquery")
            (:file "document")
-           (:file "project")))))
+           (:file "application")))
+      (:module ml-rest
+        :serial t
+        :components 
+            ((:file "call")
+            (:file "eval")))
+      ))

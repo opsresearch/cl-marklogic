@@ -18,21 +18,7 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;;;
 
-(in-package #:cl-marklogic)
-
-(defun read-stream (stream)
-  (let ((seq (make-array (file-length stream) :element-type 'character :fill-pointer t)))
-    (setf (fill-pointer seq) (read-sequence seq stream))
-    seq))
-
-
-(defun read-include (include)
-  (with-open-file (stream 
-                    (merge-pathnames
-                      (make-pathname :directory '(:relative "xquery") :name include :type "xqy")
-                      (asdf:system-source-directory :cl-marklogic)
-                      ))
-                  (read-stream stream)))
+(in-package #:ml-rest)
 
 (defun variables-to-json (variables)
   (format nil "{ ~{~a~^,~} }"
@@ -40,27 +26,15 @@
             (lambda (it) (format nil "\"~A\":\"~A\" " (car it) (cdr it))) 
             variables)))
 
-(defun inline-includes (xquery)
-  (let ((begin (search "(:#include " xquery)))
-    (if begin 
-        (let ((file-begin (search " " xquery :start2 begin))
-              (end (search ":)" xquery :start2 begin)))
-          (inline-includes 
-            (format nil "~A~A~A"
-                    (subseq xquery 0 begin)
-                    (read-include (string-trim " " (subseq xquery file-begin end )))
-                    (subseq xquery (+ 2 end)))))
-        xquery)))
-
-(defun evaluate-xquery(xquery &optional (variables () ))
+(defun eval-xquery(xquery &optional (variables () ))
   "Evaluate an XQuery string inlining includes and applying variables."
   (read-from-string
     (extract-text-only
       (babel:octets-to-string
-        (call-rest-api (cdr (assoc :evaluate-path *connection*))
+        (call (cdr (assoc :eval-path *connection*))
                        :method :post
                        :accept "multipart/mixed"
                        :parameters (list
-                                     (cons "xquery" (inline-includes xquery))
+                                     (cons "xquery" xquery)
                                      (cons "vars" (variables-to-json variables))))))))
 

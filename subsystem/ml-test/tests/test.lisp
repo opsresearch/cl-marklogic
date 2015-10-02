@@ -21,6 +21,6 @@
 (in-package #:ml-test)
 
 (defun test-all()
-	"Run unit tests for cl-opsresearch and subsystems."
+	"Run unit tests for cl-marklogic and subsystems."
 	(test-marklogic)
 	(test-optimizer))
