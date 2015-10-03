@@ -20,5 +20,6 @@
 ;;;; END LICENSE BLOCK ;;;;;
 
 (defpackage #:ml-optimizer
-  (:use #:cl))
+  (:use #:cl)
+  (:export #:start))
 
