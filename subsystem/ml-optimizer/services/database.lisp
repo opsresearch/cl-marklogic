@@ -22,11 +22,10 @@
 (in-package #:ml-optimizer)
 
 (defun database-list () 
-  	(json:encode-json-to-string (mapcar #'cdr (cl-marklogic:get-database-info))))
+  	(json:encode-json-to-string (ids-to-string (mapcar #'cdr (cl-marklogic:get-database-info)))))
 
 (defun database-detail (database-id)
-   ;(print database-id)
-   (json:encode-json-to-string (cl-marklogic:database-properties database-id)))
+   (json:encode-json-to-string (ids-to-string (cl-marklogic:database-properties (parse-integer database-id)))))
 
 (hunchentoot:define-easy-handler (database :uri "/database" :default-request-type :get)
                                  (id)
