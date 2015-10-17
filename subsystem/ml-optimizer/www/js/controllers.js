@@ -41,16 +41,23 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.controller('DatabasesCtrl', function($scope, $http) {
+    $http.get('/database').then(function successCallback(response) {
+        $scope.databases = response.data;
+      },
+      function errorCallback(response) {
+        $scope.databases = [];
+      });
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
+.controller('DatabaseCtrl', function($scope, $stateParams, $http) {
+  $http({
+    method: 'GET',
+    url: '/database',
+    params: {id: $stateParams.databaseId}
+    }).then(function successCallback(response) {
+        $scope.database = response.data;
+      },
+      function errorCallback(response) {
+        $scope.database = {};
+      });});

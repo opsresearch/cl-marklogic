@@ -1,4 +1,4 @@
-;;;; ml-optimizer.asd
+;;;; services.lisp
 
 ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -19,22 +19,17 @@
 ;;;; 
 ;;;; END LICENSE BLOCK ;;;;;
 
-(asdf:defsystem #:ml-optimizer
-  :description "Common Lisp application to optimize MarkLogic clusters."
-  :author "Donald Anderson <dranderson@OpsResearch.com>"
-  :license "AGPL3"
-  :depends-on
-    (#:hunchentoot
-     #:cl-json
-     #:cl-marklogic
-     #:cl-opsresearch)
-  :serial t
-  :components
-    ((:file "package")
-     (:file "ml-optimizer")
-     (:module services
-      :serial t
-      :components 
-        ((:file "services")
-        (:file "database")))))
+(in-package #:ml-optimizer)
+
+(defun database-list () 
+  	(json:encode-json-to-string (mapcar #'cdr (cl-marklogic:get-database-info))))
+
+(defun database-detail (database-id)
+   ;(print database-id)
+   (json:encode-json-to-string (cl-marklogic:database-properties database-id)))
+
+(hunchentoot:define-easy-handler (database :uri "/database" :default-request-type :get)
+                                 (id)
+                                 (setf (hunchentoot:content-type*) "application/json")
+                                 (if id (database-detail id) (database-list)))
 

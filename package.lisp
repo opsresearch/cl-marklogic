@@ -32,6 +32,7 @@
     #:forest-property
     #:get-database-info
     #:database-ids
+    #:database-properties
     #:database-names
     #:database-name-p
     #:database-property

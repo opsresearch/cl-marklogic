@@ -32,6 +32,10 @@
   "Get a list the database ids in the cluster."
   (mapcar #'car database-info))
 
+(defun database-properties (database-id &optional (database-info (get-database-info)))
+  "Get the properties for a database-id."
+  (cdar database-info))
+
 (defun database-property (database-id property &optional (database-info (get-database-info)))
   "Get the value of a database property given the database-id and property.
     The available properties are:

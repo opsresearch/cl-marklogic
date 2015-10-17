@@ -1,4 +1,4 @@
-;;;; ml-optimizer.asd
+;;;; services.lisp
 
 ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -19,22 +19,4 @@
 ;;;; 
 ;;;; END LICENSE BLOCK ;;;;;
 
-(asdf:defsystem #:ml-optimizer
-  :description "Common Lisp application to optimize MarkLogic clusters."
-  :author "Donald Anderson <dranderson@OpsResearch.com>"
-  :license "AGPL3"
-  :depends-on
-    (#:hunchentoot
-     #:cl-json
-     #:cl-marklogic
-     #:cl-opsresearch)
-  :serial t
-  :components
-    ((:file "package")
-     (:file "ml-optimizer")
-     (:module services
-      :serial t
-      :components 
-        ((:file "services")
-        (:file "database")))))
-
+(in-package #:ml-optimizer)
