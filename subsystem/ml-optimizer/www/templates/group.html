@@ -1,16 +1,16 @@
-<ion-view view-title="Database">
+<ion-view view-title="Group">
   <ion-content>
     <div class="list card">
       <div class="item">
-        <h3>{{database.databaseName}}</h3>
+        <h3>{{group.groupName}}</h3>
       </div>
       <div class="item item-body">
-        <p>Id: {{database.databaseId}}</p>
+        <p>Id: {{group.groupId}}</p>
 
-        <p>Forests: <span ng-repeat="forest in [database.forests]">
-                <a href="#/app/forests/{{forest.forestId}}">{{forest.forestName}}</a>
+       <p>Hosts: <span ng-repeat="host in [group.hosts]">
+                <a href="#/app/hosts/{{host.hostId}}">{{host.hostName}}</a>
         </span></p>
-      
+
       </div>
       <div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item">

@@ -36,5 +36,9 @@
       :serial t
       :components 
         ((:file "services")
-        (:file "database")))))
+        (:file "cluster")
+        (:file "group")
+        (:file "host")
+        (:file "database")
+        (:file "forest")))))
 

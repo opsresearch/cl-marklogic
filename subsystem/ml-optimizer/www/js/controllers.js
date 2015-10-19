@@ -41,6 +41,73 @@ angular.module('starter.controllers', [])
   };
 })
 
+
+.controller('ClustersCtrl', function($scope, $http) {
+    $http.get('/cluster').then(function successCallback(response) {
+        $scope.clusters = response.data;
+      },
+      function errorCallback(response) {
+        $scope.clusters = [];
+      });
+})
+
+.controller('ClusterCtrl', function($scope, $stateParams, $http) {
+  $http({
+    method: 'GET',
+    url: '/cluster',
+    params: {id: $stateParams.clusterId}
+    }).then(function successCallback(response) {
+        $scope.cluster = response.data;
+      },
+      function errorCallback(response) {
+        $scope.cluster = {};
+      });
+  })
+
+.controller('GroupsCtrl', function($scope, $http) {
+    $http.get('/group').then(function successCallback(response) {
+        $scope.groups = response.data;
+      },
+      function errorCallback(response) {
+        $scope.groups = [];
+      });
+})
+
+.controller('GroupCtrl', function($scope, $stateParams, $http) {
+  $http({
+    method: 'GET',
+    url: '/group',
+    params: {id: $stateParams.groupId}
+    }).then(function successCallback(response) {
+        $scope.group = response.data;
+      },
+      function errorCallback(response) {
+        $scope.group = {};
+      });
+  })
+
+.controller('HostsCtrl', function($scope, $http) {
+    $http.get('/host').then(function successCallback(response) {
+        $scope.hosts = response.data;
+      },
+      function errorCallback(response) {
+        $scope.hosts = [];
+      });
+})
+
+.controller('HostCtrl', function($scope, $stateParams, $http) {
+  $http({
+    method: 'GET',
+    url: '/host',
+    params: {id: $stateParams.hostId}
+    }).then(function successCallback(response) {
+        $scope.host = response.data;
+      },
+      function errorCallback(response) {
+        $scope.host = {};
+      });
+  })
+
 .controller('DatabasesCtrl', function($scope, $http) {
     $http.get('/database').then(function successCallback(response) {
         $scope.databases = response.data;
@@ -60,4 +127,31 @@ angular.module('starter.controllers', [])
       },
       function errorCallback(response) {
         $scope.database = {};
-      });});
+      });
+  })
+
+.controller('ForestsCtrl', function($scope, $http) {
+    $http.get('/forest').then(function successCallback(response) {
+        $scope.forests = response.data;
+      },
+      function errorCallback(response) {
+        $scope.forests = [];
+      });
+})
+
+.controller('ForestCtrl', function($scope, $stateParams, $http) {
+  $http({
+    method: 'GET',
+    url: '/forest',
+    params: {id: $stateParams.forestId}
+    }).then(function successCallback(response) {
+        $scope.forest = response.data;
+      },
+      function errorCallback(response) {
+        $scope.forest = {};
+      });
+  })
+
+.controller('OptForestsCtrl', function($scope, $http) {
+});
+

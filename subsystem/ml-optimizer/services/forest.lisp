@@ -1,4 +1,4 @@
-;;;; database.lisp
+;;;; forest.lisp
 
 ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -21,14 +21,15 @@
 
 (in-package #:ml-optimizer)
 
-(defun database-list () 
-  	(json:encode-json-to-string (mapcar #'cdr (cl-marklogic:get-database-info))))
+(defun forest-list () 
+  	(json:encode-json-to-string (mapcar #'cdr (cl-marklogic:get-forest-info))))
 
-(defun database-detail (database-id)
-   (json:encode-json-to-string (cl-marklogic:database-properties database-id)))
+(defun forest-detail (forest-id)
+   (json:encode-json-to-string (cl-marklogic:forest-properties forest-id)))
 
-(hunchentoot:define-easy-handler (database :uri "/database" :default-request-type :get)
+(hunchentoot:define-easy-handler (forest :uri "/forest" :default-request-type :get)
                                  (id)
                                  (setf (hunchentoot:content-type*) "application/json")
-                                 (if id (database-detail id) (database-list)))
+                                 (if id (forest-detail id) (forest-list)))
+
 

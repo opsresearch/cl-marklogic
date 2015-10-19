@@ -1,4 +1,4 @@
-(:host-info.xqy:)
+(:cluster-info.xqy:)
 
 (:;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -18,24 +18,23 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;:)
 
-declare function local:host-info() { 
+declare function local:cluster-info() { 
 
   let $config := admin:get-configuration()
-  let $hosts := map:map()
+  let $clusters := map:map()
   let $_ :=
-    for $host-id in admin:get-host-ids($config)
+    for $cluster-id in (admin:cluster-get-id($config), admin:cluster-get-foreign-cluster-ids($config))
       let $props := map:map()
       let $_ := (
         map:put($props, ':time-stamp', current-dateTime()),
-        map:put($props, ':host-id',     xs:string($host-id)),
-        map:put($props, ':host-name',   admin:host-get-name($config, $host-id)),
-        map:put($props, ':bind-port',   admin:host-get-port($config, $host-id)),
-        map:put($props, ':group-id',    xs:string(admin:host-get-group($config, $host-id))),
-        map:put($props, ':zone',        admin:host-get-zone($config, $host-id))
-      )
-      return map:put($hosts, xs:string($host-id), $props)
+        map:put($props, ':cluster-id', xs:string($cluster-id)),
+        map:put($props, ':cluster-name',  xdmp:cluster-name($cluster-id)),
+        map:put($props, ':local-cluster-p', $cluster-id eq admin:cluster-get-id($config))
 
-return $hosts
+      )
+      return map:put($clusters, xs:string($cluster-id), $props)
+
+return $clusters
 };
 
 

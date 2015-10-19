@@ -1,4 +1,4 @@
-;;;; database-info.lisp
+;;;; database.lisp
 
 ;;;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 

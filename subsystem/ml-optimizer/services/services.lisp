@@ -21,12 +21,4 @@
 
 (in-package #:ml-optimizer)
 
-(defun ids-to-string (atom)
-  (cond
-    ((null atom) atom)
-    ((not (listp atom)) atom)
-    ((eq :host-id (car atom)) (cons (car atom) (write-to-string (cdr atom))))
-    ((eq :database-id (car atom)) (cons (car atom) (write-to-string (cdr atom))))
-    ((eq :forest-id (car atom)) (cons (car atom) (write-to-string (cdr atom))))
-    (T (cons (ids-to-string (car atom)) (ids-to-string (cdr atom))))))
 

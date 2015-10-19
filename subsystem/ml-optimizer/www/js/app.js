@@ -20,16 +20,76 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       StatusBar.styleDefault();
     }
   });
-})
+  })
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('app', {
+  .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
+  })
+
+  .state('app.clusters', {
+    url: "/clusters",
+    views: {
+        'menuContent': {
+            templateUrl: "templates/clusters.html",
+            controller: 'ClustersCtrl'
+        }
+    }
+  })
+
+  .state('app.cluster', {
+    url: "/clusters/:clusterId",
+    views: {
+        'menuContent': {
+          templateUrl: "templates/cluster.html",
+          controller: 'ClusterCtrl'
+      }
+    }
+  })
+
+  .state('app.groups', {
+    url: "/groups",
+    views: {
+        'menuContent': {
+            templateUrl: "templates/groups.html",
+            controller: 'GroupsCtrl'
+        }
+    }
+  })
+
+  .state('app.group', {
+    url: "/groups/:groupId",
+    views: {
+        'menuContent': {
+          templateUrl: "templates/group.html",
+          controller: 'GroupCtrl'
+      }
+    }
+  })
+
+   .state('app.hosts', {
+    url: "/hosts",
+    views: {
+        'menuContent': {
+            templateUrl: "templates/hosts.html",
+            controller: 'HostsCtrl'
+        }
+    }
+  })
+
+  .state('app.host', {
+    url: "/hosts/:hostId",
+    views: {
+        'menuContent': {
+          templateUrl: "templates/host.html",
+          controller: 'HostCtrl'
+      }
+    }
   })
 
   .state('app.databases', {
@@ -50,7 +110,38 @@ angular.module('starter', ['ionic', 'starter.controllers'])
           controller: 'DatabaseCtrl'
       }
     }
-});
+  })
+
+  .state('app.forests', {
+    url: "/forests",
+    views: {
+        'menuContent': {
+            templateUrl: "templates/forests.html",
+            controller: 'ForestsCtrl'
+        }
+    }
+  })
+
+  .state('app.forest', {
+    url: "/forests/:forestId",
+    views: {
+        'menuContent': {
+          templateUrl: "templates/forest.html",
+          controller: 'ForestCtrl'
+      }
+    }
+  })
+
+  .state('app.opt-forests', {
+    url: "/opt-forests",
+    views: {
+        'menuContent': {
+            templateUrl: "templates/opt-forests.html",
+            controller: 'OptForestsCtrl'
+        }
+    }
+  });
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/databases');
 });

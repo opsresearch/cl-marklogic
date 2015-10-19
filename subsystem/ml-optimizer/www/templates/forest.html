@@ -1,0 +1,48 @@
+<ion-view view-title="Forest">
+  <ion-content>
+    <div class="list card">
+      <div class="item">
+        <h3>{{forest.forestName}}</h3>
+      </div>
+      <div class="item item-body">
+      <p>Id: {{forest.forestId}}</p>
+      <p>Host: <a href="#/app/hosts/{{forest.hostId}}">{{forest.hostName}}</a></p>
+      <p>Database: <a href="#/app/hosts/{{forest.databaseId}}">{{forest.databaseName}}</a></p>
+      <p>Journals Size: {{forest.journalsSize}}</p>
+      <p>Data Dir: {{forest.dataDir}}</a></p>
+      <p>Data Size: {{forest.dataSize}}</a></p>
+      <p>Memory Size: {{forest.memorySize}}</a></p>
+      <p>Device Size: {{forest.deviceSize}}</a></p>
+      <p>Device Space: {{forest.deviceSpace}}</a></p>
+
+
+      <p>Fast Data Dir: {{forest.fastDataDir}}</a></p>
+      <p>Fast Data Size: {{forest.fastDataSize}}</a></p>
+      <p>Fast Memory Size: {{forest.fastMemorySize}}</a></p>
+
+      <p>Large Data Dir: {{forest.largeDataDir}}</a></p>
+      <p>Large Data Size: {{forest.largeDataSize}}</a></p>
+
+      <p>Master Forest: <a href="#/app/forests/{{forest.masterForestId}}">{{forest.masterForestName}}</a></p>
+      <p>Replica Forests: <span ng-repeat="forest in [forest.replicaForests]">
+                <a href="#/app/hosts/{{host.hostId}}">{{host.hostName}}</a>
+        </span></p>
+
+      </div>
+      <div class="item tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item">
+          <i class="icon ion-thumbsup"></i>
+          Like
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-chatbox"></i>
+          Comment
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-share"></i>
+          Share
+        </a>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,4 +1,4 @@
-;;;; host-info.lisp
+;;;; host.lisp
 
 ;;;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -20,10 +20,21 @@
 
 (in-package #:cl-marklogic)
 
+(defun host-names (&optional (host-info (get-host-info)))
+  "Get a list the host names in the host."
+  (mapcar (lambda (entry) (cdr (assoc :host-name (cdr entry)))) host-info))
+
+(defun host-name-p (host-name &optional (host-info (get-host-info)))
+  "Get T if host-name exists or nil if not."
+  (find host-name (host-names host-info) :test #'equal))
 
 (defun host-ids (&optional (host-info (get-host-info)))
   "Get a list the host ids in the cluster."
   (mapcar #'car host-info))
+
+(defun host-properties (host-id &optional (host-info (get-host-info)))
+  "Get the properties for a host-id."
+  (cdr (assoc host-id host-info :test #'equal)))
 
 (defun host-property (host-id property &optional (host-info (get-host-info)))
   "Get the value of a host property given the host-id and property.
@@ -32,7 +43,7 @@
       :host-id    -> Id of this host.
       :host-name  -> String name of this host.
       :bind-port  -> Port number to which this host is bound.
-      :group    -> Id of the group to which this host belongs.
+      :host    -> Id of the host to which this host belongs.
       :zone     -> Zone where this host is assigned.
   "
   (cdr (assoc property (cdr (assoc host-id host-info)))))

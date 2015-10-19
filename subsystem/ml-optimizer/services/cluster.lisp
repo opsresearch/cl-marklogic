@@ -1,4 +1,4 @@
-;;;; database.lisp
+;;;; cluster.lisp
 
 ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -21,14 +21,14 @@
 
 (in-package #:ml-optimizer)
 
-(defun database-list () 
-  	(json:encode-json-to-string (mapcar #'cdr (cl-marklogic:get-database-info))))
+(defun cluster-list () 
+  	(json:encode-json-to-string (mapcar #'cdr (cl-marklogic:get-cluster-info))))
 
-(defun database-detail (database-id)
-   (json:encode-json-to-string (cl-marklogic:database-properties database-id)))
+(defun cluster-detail (cluster-id)
+   (json:encode-json-to-string (cl-marklogic:cluster-properties cluster-id)))
 
-(hunchentoot:define-easy-handler (database :uri "/database" :default-request-type :get)
+(hunchentoot:define-easy-handler (cluster :uri "/cluster" :default-request-type :get)
                                  (id)
                                  (setf (hunchentoot:content-type*) "application/json")
-                                 (if id (database-detail id) (database-list)))
+                                 (if id (cluster-detail id) (cluster-list)))
 

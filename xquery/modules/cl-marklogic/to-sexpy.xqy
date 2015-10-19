@@ -62,7 +62,13 @@ declare function local:to-sexpy($v) {
 };
 
 declare function local:tos($v){
-	concat('&quot;', replace(xs:string($v), "&quot;", "\\&quot;"), '&quot;')
+	let $v := replace(xs:string($v), "&quot;", "\\&quot;")
+	return concat('&quot;', $v, '&quot;')
+};
+
+declare function local:key-tos($v){
+	let $v := replace(xs:string($v), "&quot;", "\\&quot;")
+	return if (starts-with($v, ':')) then $v else concat('&quot;', $v, '&quot;')
 };
 
 declare function local:seq-to-list($seq) { 
@@ -81,7 +87,7 @@ declare function local:map-to-alist($map) {
 		for $key in map:keys($map)
 			let $value := map:get($map, $key)
 			return 
-				('(', $key, ' . ', local:to-sexpy($value),')'),
+				('(', local:key-tos($key), ' . ', local:to-sexpy($value),')'),
 		')'
 	),' ')
 };

@@ -37,6 +37,8 @@
            (:file "appserver")
            (:file "forest")
            (:file "host")
+           (:file "cluster")
+           (:file "group")
            (:file "xquery")
            (:file "document")
            (:file "application")))

@@ -1,4 +1,4 @@
-;;;; forest-info.lisp
+;;;; forest.lisp
 
 ;;;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -20,9 +20,21 @@
 
 (in-package #:cl-marklogic)
 
+(defun forest-names (&optional (forest-info (get-forest-info)))
+  "Get a list the forest names in the cluster."
+  (mapcar (lambda (entry) (cdr (assoc :forest-name (cdr entry)))) forest-info))
+
+(defun forest-name-p (forest-name &optional (forest-info (get-forest-info)))
+  "Get T if forest-name exists or nil if not."
+  (find forest-name (forest-names forest-info) :test #'equal))
+
 (defun forest-ids (&optional (forest-info (get-forest-info)))
   "Get a list of the forest ids in the cluster."
   (mapcar #'car forest-info))
+
+(defun forest-properties (forest-id &optional (forest-info (get-forest-info)))
+  "Get the properties for a forest-id."
+  (cdr (assoc forest-id forest-info :test #'equal)))
 
 (defun forest-property (forest-id property &optional (forest-info (get-forest-info)))
   "Get the value of a forest property given the forest-id and property.

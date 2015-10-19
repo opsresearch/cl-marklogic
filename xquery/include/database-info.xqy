@@ -27,9 +27,15 @@ declare function local:database-info() {
       let $props := map:map()
       let $_ := (
         map:put($props, ':time-stamp', current-dateTime()),
-        map:put($props, ':database-id', $database-id),
+        map:put($props, ':database-id', xs:string($database-id)),
         map:put($props, ':database-name', admin:database-get-name($config, $database-id)),
-        map:put($props, ':forests', admin:database-get-attached-forests($config, $database-id))
+
+        map:put($props, ':forests', 
+          for $id in admin:database-get-attached-forests($config, $database-id)
+            let $m := map:map()
+            let $_ := map:put($m, ':forest-id', xs:string($id))
+            let $_ := map:put($m, ':forest-name', admin:forest-get-name($config, $id))
+            return $m)
         )
       return map:put($databases, xs:string($database-id), $props)
 

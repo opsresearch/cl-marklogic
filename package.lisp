@@ -23,25 +23,50 @@
   (:export
     #:ping
     #:echo
+    
+    #:get-cluster-info
+    #:cluster-ids
+    #:cluster-names
+    #:cluster-name-p
+    #:cluster-property
+    #:cluster-properties
+    
+    #:get-group-info
+    #:group-ids
+    #:group-names
+    #:group-name-p
+    #:group-property
+    #:group-properties
+    
+    
     #:get-host-info
     #:host-ids
+    #:host-names
+    #:host-name-p
     #:host-property
-    #:get-forest-info
-    #:get-forest-status
-    #:forest-ids
-    #:forest-property
+    #:host-properties
+    
     #:get-database-info
     #:database-ids
-    #:database-properties
     #:database-names
     #:database-name-p
     #:database-property
+    #:database-properties
+    #:database-attach-forest
+    #:database-create
+    
+    #:get-forest-info
+    #:forest-ids
+    #:forest-names
+    #:forest-name-p
+    #:forest-property
+    #:forest-properties
+    #:get-forest-status
+    #:forest-create
+    
     #:evaluate-xquery
     #:host-time
     #:rest-api-create
-    #:database-create
-    #:forest-create
-    #:database-attach-forest
     #:put-document
     #:get-document
     #:delete-document
@@ -62,6 +87,7 @@
     #:eval-xquery
     #:set-connection
     #:get-connection
+    #:get-initial-connection
     #:with-connection
     ))
 
