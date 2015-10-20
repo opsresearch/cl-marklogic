@@ -46,15 +46,17 @@
 
 (defun get-cluster-info()
   "Get a two tier nested a-lists containing properties of all of the clusters in the cluster."
-  (evaluate-xquery 
-    "
-    xquery version '1.0-ml';
-    import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
-    (:#include to-sexpy :)
-    (:#include cluster-info :)
-    local:to-sexpy(local:cluster-info())
-    "
-    ))
+  (let ((cluster-info (assoc :cluster-info *cluster-config*)))
+    (if cluster-info (cdr cluster-info)
+        (evaluate-xquery 
+          "
+          xquery version '1.0-ml';
+          import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
+          (:#include to-sexpy :)
+          (:#include cluster-info :)
+          local:to-sexpy(local:cluster-info())
+          "
+          ))))
 
 
 

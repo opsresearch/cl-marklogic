@@ -50,14 +50,16 @@
 
 (defun get-host-info()
   "Get a two tier nested a-lists containing properties of all of the hosts in the cluster."
-  (evaluate-xquery 
-    "
-    xquery version '1.0-ml';
-    import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
-    (:#include to-sexpy :)
-    (:#include host-info :)
-    local:to-sexpy(local:host-info())
-    "
-    ))
+  (let ((host-info (assoc :host-info *cluster-config*)))
+    (if host-info (cdr host-info)
+        (evaluate-xquery 
+          "
+          xquery version '1.0-ml';
+          import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
+          (:#include to-sexpy :)
+          (:#include host-info :)
+          local:to-sexpy(local:host-info())
+          "
+          ))))
 
 

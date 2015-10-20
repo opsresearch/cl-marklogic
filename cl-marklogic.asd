@@ -30,7 +30,7 @@
   :components 
     ((:file "package")
      (:file "cl-marklogic")
-     (:module utils
+     (:module lib
         :serial t
         :components 
           ((:file "database")
@@ -41,6 +41,7 @@
            (:file "group")
            (:file "xquery")
            (:file "document")
+           (:file "cluster-config")
            (:file "application")))
       (:module ml-rest
         :serial t

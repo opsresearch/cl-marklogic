@@ -63,16 +63,18 @@
 
 (defun get-forest-info()
   "Get a two tier nested a-lists containing properties of all of the forests in the cluster."
-  (evaluate-xquery
-    "
-    xquery version '1.0-ml';
-    import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
-    declare namespace fs = 'http://marklogic.com/xdmp/status/forest';
-    (:#include to-sexpy :)
-    (:#include forest-info :)
-    local:to-sexpy(local:forest-info())
-    "
-    ))
+  (let ((forest-info (assoc :forest-info *cluster-config*)))
+    (if forest-info (cdr forest-info)
+        (evaluate-xquery
+          "
+          xquery version '1.0-ml';
+          import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
+          declare namespace fs = 'http://marklogic.com/xdmp/status/forest';
+          (:#include to-sexpy :)
+          (:#include forest-info :)
+          local:to-sexpy(local:forest-info())
+          "
+          ))))
 
 (defun get-forest-status(forest-id)
   "Get the complete XML representation of the forest's status."

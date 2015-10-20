@@ -48,15 +48,17 @@
 
 (defun get-database-info()
   "Get a two tier nested a-lists containing properties of all of the databases in the cluster."
-  (evaluate-xquery 
-    "
-    xquery version '1.0-ml';
-    import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
-    (:#include to-sexpy :)
-    (:#include database-info :)
-    local:to-sexpy(local:database-info())
-    "
-    ))
+  (let ((database-info (assoc :database-info *cluster-config*)))
+    (if database-info (cdr database-info)
+        (evaluate-xquery
+          "
+          xquery version '1.0-ml';
+          import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
+          (:#include to-sexpy :)
+          (:#include database-info :)
+          local:to-sexpy(local:database-info())
+          "
+          ))))
 
 (defun database-create(database-name &key 
                                      (security-database-name "Security") 

@@ -24,6 +24,15 @@
     #:ping
     #:echo
     
+    #:get-cluster-config
+    #:set-cluster-config
+    #:with-cluster-config
+    #:get-cluster-config-from-connection
+    #:write-cluster-config
+    #:read-cluster-config
+    #:read-sample-cluster-config
+    #:cache-cluster-config
+    
     #:get-cluster-info
     #:cluster-ids
     #:cluster-names
@@ -37,7 +46,6 @@
     #:group-name-p
     #:group-property
     #:group-properties
-    
     
     #:get-host-info
     #:host-ids

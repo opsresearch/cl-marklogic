@@ -47,14 +47,16 @@
 
 (defun get-group-info()
   "Get a two tier nested a-lists containing properties of all of the groups in the group."
-  (evaluate-xquery 
-    "
-    xquery version '1.0-ml';
-    import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
-    (:#include to-sexpy :)
-    (:#include group-info :)
-    local:to-sexpy(local:group-info())
-    "
-    ))
+  (let ((group-info (assoc :group-info *cluster-config*)))
+    (if group-info (cdr group-info)
+        (evaluate-xquery 
+          "
+          xquery version '1.0-ml';
+          import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
+          (:#include to-sexpy :)
+          (:#include group-info :)
+          local:to-sexpy(local:group-info())
+          "
+          ))))
 
 

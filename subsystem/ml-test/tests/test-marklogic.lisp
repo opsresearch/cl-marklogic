@@ -21,9 +21,17 @@
 (in-package #:ml-test)
 
 (defun test-marklogic ()
-  (5am:explain! (5am:run 'test-marklogic)))
+  (5am:explain! (5am:run 'smoke-test-marklogic))
+   
+  (cl-marklogic:with-cluster-config (nil)
+                       (5am:explain! (5am:run 'connect-test-marklogic))))
 
-(5am:test test-marklogic
+(5am:test smoke-test-marklogic
+          (5am:is ( cl-marklogic:group-name-p "Default"))
+          (5am:is ( cl-marklogic:database-name-p "Documents"))
+          (5am:is ( cl-marklogic:forest-name-p "Documents")))
+
+(5am:test connect-test-marklogic
           (5am:is ( equal (cl-marklogic:ping) "pong"))
           (5am:is ( equal (cl-marklogic:echo "5am echo test") "5am echo test"))
           
@@ -31,8 +39,7 @@
           (5am:is (cl-marklogic:get-group-info))
           (5am:is (cl-marklogic:get-host-info))
           (5am:is (cl-marklogic:get-database-info))
-          (5am:is (cl-marklogic:get-forest-info))
+          (5am:is (cl-marklogic:get-forest-info)))
 
-          (5am:is ( cl-marklogic:group-name-p "Default"))
-          (5am:is ( cl-marklogic:database-name-p "Documents"))
-          (5am:is ( cl-marklogic:forest-name-p "Documents")))
+
+
