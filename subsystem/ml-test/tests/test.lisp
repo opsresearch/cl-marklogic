@@ -22,9 +22,5 @@
 
 (defun test-all()
 	"Run unit tests for cl-marklogic and subsystems."
-
-(ml-rest:with-connection ((cons '(:protocol . "http") (ml-rest:get-initial-connection)))
-  (test-marklogic))
-
-(ml-rest:with-connection ((cons '(:protocol . "http") (ml-rest:get-initial-connection)))
-  (test-optimizer)))
+  (test-marklogic)
+  (test-optimizer))

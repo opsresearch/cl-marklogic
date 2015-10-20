@@ -1,4 +1,4 @@
-;;;; xquery.lisp
+;;;; eval.lisp
 
 ;;;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 

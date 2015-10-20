@@ -91,12 +91,16 @@
 (defpackage #:ml-rest
   (:use #:cl)
   (:export
-    #:call
-    #:eval-xquery
     #:set-connection
     #:get-connection
     #:get-initial-connection
     #:with-connection
+    #:write-connection
+    #:read-connection
+    #:read-sample-connection
+ 
+    #:call
+    #:eval-xquery
     ))
 
 (eval-when (:compile-toplevel :load-toplevel :execute)

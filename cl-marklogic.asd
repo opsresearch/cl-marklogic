@@ -46,6 +46,7 @@
       (:module ml-rest
         :serial t
         :components 
-            ((:file "call")
+            ((:file "connection")
+            (:file "call")
             (:file "eval")))
       ))
