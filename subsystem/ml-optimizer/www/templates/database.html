@@ -7,7 +7,7 @@
       <div class="item item-body">
         <p>Id: {{database.databaseId}}</p>
 
-        <p>Forests: <span ng-repeat="forest in [database.forests]">
+        <p>Forests: <span ng-repeat="forest in [].concat(database.forests)">
                 <a href="#/app/forests/{{forest.forestId}}">{{forest.forestName}}</a>
         </span></p>
       

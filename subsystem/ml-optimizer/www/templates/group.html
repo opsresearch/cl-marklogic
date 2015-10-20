@@ -7,7 +7,7 @@
       <div class="item item-body">
         <p>Id: {{group.groupId}}</p>
 
-       <p>Hosts: <span ng-repeat="host in [group.hosts]">
+       <p>Hosts: <span ng-repeat="host in [].concat(group.hosts)">
                 <a href="#/app/hosts/{{host.hostId}}">{{host.hostName}}</a>
         </span></p>
 

@@ -24,7 +24,7 @@
       <p>Large Data Size: {{forest.largeDataSize}}</a></p>
 
       <p>Master Forest: <a href="#/app/forests/{{forest.masterForestId}}">{{forest.masterForestName}}</a></p>
-      <p>Replica Forests: <span ng-repeat="forest in [forest.replicaForests]">
+      <p>Replica Forests: <span ng-repeat="forest in [].concat(forest.replicaForests)">
                 <a href="#/app/hosts/{{host.hostId}}">{{host.hostName}}</a>
         </span></p>
 
