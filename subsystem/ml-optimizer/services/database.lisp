@@ -27,7 +27,7 @@
 (defun database-detail (database-id)
    (json:encode-json-to-string (cl-marklogic:database-properties database-id)))
 
-(hunchentoot:define-easy-handler (database :uri "/database" :default-request-type :get)
+(hunchentoot:define-easy-handler (database :uri "/api/database" :default-request-type :get)
                                  (id)
                                  (setf (hunchentoot:content-type*) "application/json")
                                  (if id (database-detail id) (database-list)))

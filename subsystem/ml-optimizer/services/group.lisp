@@ -27,7 +27,7 @@
 (defun group-detail (group-id)
    (json:encode-json-to-string (cl-marklogic:group-properties group-id)))
 
-(hunchentoot:define-easy-handler (group :uri "/group" :default-request-type :get)
+(hunchentoot:define-easy-handler (group :uri "/api/group" :default-request-type :get)
                                  (id)
                                  (setf (hunchentoot:content-type*) "application/json")
                                  (if id (group-detail id) (group-list)))

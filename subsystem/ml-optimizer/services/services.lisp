@@ -20,5 +20,3 @@
 ;;;; END LICENSE BLOCK ;;;;;
 
 (in-package #:ml-optimizer)
-
-

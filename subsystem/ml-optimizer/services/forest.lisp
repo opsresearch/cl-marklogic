@@ -27,7 +27,7 @@
 (defun forest-detail (forest-id)
    (json:encode-json-to-string (cl-marklogic:forest-properties forest-id)))
 
-(hunchentoot:define-easy-handler (forest :uri "/forest" :default-request-type :get)
+(hunchentoot:define-easy-handler (forest :uri "/api/forest" :default-request-type :get)
                                  (id)
                                  (setf (hunchentoot:content-type*) "application/json")
                                  (if id (forest-detail id) (forest-list)))

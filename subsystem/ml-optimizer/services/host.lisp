@@ -27,7 +27,7 @@
 (defun host-detail (host-id)
    (json:encode-json-to-string (cl-marklogic:host-properties host-id)))
 
-(hunchentoot:define-easy-handler (host :uri "/host" :default-request-type :get)
+(hunchentoot:define-easy-handler (host :uri "/api/host" :default-request-type :get)
                                  (id)
                                  (setf (hunchentoot:content-type*) "application/json")
                                  (if id (host-detail id) (host-list)))

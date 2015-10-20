@@ -27,7 +27,7 @@
 (defun cluster-detail (cluster-id)
    (json:encode-json-to-string (cl-marklogic:cluster-properties cluster-id)))
 
-(hunchentoot:define-easy-handler (cluster :uri "/cluster" :default-request-type :get)
+(hunchentoot:define-easy-handler (cluster :uri "/api/cluster" :default-request-type :get)
                                  (id)
                                  (setf (hunchentoot:content-type*) "application/json")
                                  (if id (cluster-detail id) (cluster-list)))

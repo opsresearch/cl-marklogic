@@ -41,9 +41,8 @@ angular.module('starter.controllers', [])
   };
 })
 
-
 .controller('ClustersCtrl', function($scope, $http) {
-    $http.get('/cluster').then(function successCallback(response) {
+    $http.get('api/cluster').then(function successCallback(response) {
         $scope.clusters = response.data;
       },
       function errorCallback(response) {
@@ -54,7 +53,7 @@ angular.module('starter.controllers', [])
 .controller('ClusterCtrl', function($scope, $stateParams, $http) {
   $http({
     method: 'GET',
-    url: '/cluster',
+    url: 'api/cluster',
     params: {id: $stateParams.clusterId}
     }).then(function successCallback(response) {
         $scope.cluster = response.data;
@@ -65,7 +64,7 @@ angular.module('starter.controllers', [])
   })
 
 .controller('GroupsCtrl', function($scope, $http) {
-    $http.get('/group').then(function successCallback(response) {
+    $http.get('api/group').then(function successCallback(response) {
         $scope.groups = response.data;
       },
       function errorCallback(response) {
@@ -76,7 +75,7 @@ angular.module('starter.controllers', [])
 .controller('GroupCtrl', function($scope, $stateParams, $http) {
   $http({
     method: 'GET',
-    url: '/group',
+    url: 'api/group',
     params: {id: $stateParams.groupId}
     }).then(function successCallback(response) {
         $scope.group = response.data;
@@ -87,7 +86,7 @@ angular.module('starter.controllers', [])
   })
 
 .controller('HostsCtrl', function($scope, $http) {
-    $http.get('/host').then(function successCallback(response) {
+    $http.get('api/host').then(function successCallback(response) {
         $scope.hosts = response.data;
       },
       function errorCallback(response) {
@@ -98,7 +97,7 @@ angular.module('starter.controllers', [])
 .controller('HostCtrl', function($scope, $stateParams, $http) {
   $http({
     method: 'GET',
-    url: '/host',
+    url: 'api/host',
     params: {id: $stateParams.hostId}
     }).then(function successCallback(response) {
         $scope.host = response.data;
@@ -109,7 +108,7 @@ angular.module('starter.controllers', [])
   })
 
 .controller('DatabasesCtrl', function($scope, $http) {
-    $http.get('/database').then(function successCallback(response) {
+    $http.get('api/database').then(function successCallback(response) {
         $scope.databases = response.data;
       },
       function errorCallback(response) {
@@ -120,7 +119,7 @@ angular.module('starter.controllers', [])
 .controller('DatabaseCtrl', function($scope, $stateParams, $http) {
   $http({
     method: 'GET',
-    url: '/database',
+    url: 'api/database',
     params: {id: $stateParams.databaseId}
     }).then(function successCallback(response) {
         $scope.database = response.data;
@@ -131,7 +130,7 @@ angular.module('starter.controllers', [])
   })
 
 .controller('ForestsCtrl', function($scope, $http) {
-    $http.get('/forest').then(function successCallback(response) {
+    $http.get('api/forest').then(function successCallback(response) {
         $scope.forests = response.data;
       },
       function errorCallback(response) {
@@ -142,7 +141,7 @@ angular.module('starter.controllers', [])
 .controller('ForestCtrl', function($scope, $stateParams, $http) {
   $http({
     method: 'GET',
-    url: '/forest',
+    url: 'api/forest',
     params: {id: $stateParams.forestId}
     }).then(function successCallback(response) {
         $scope.forest = response.data;
