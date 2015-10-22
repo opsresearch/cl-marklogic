@@ -51,7 +51,7 @@
 (defun read-sample-cluster-config (config)
   (read-cluster-config 
     (merge-pathnames
-      (make-pathname :directory '(:relative "samples" "cluster-config") :name config :type "ccfg")
+      (make-pathname :directory '(:relative "samples") :name config :type "ccfg")
       (asdf:system-source-directory :cl-marklogic))))
 
 (defun cache-cluster-config ()
@@ -67,5 +67,5 @@
                          (cons :forest-info (get-forest-info))
                          )))
 
-(set-cluster-config (read-sample-cluster-config "out-of-the-box"))
+;(set-cluster-config (read-sample-cluster-config "out-of-the-box"))
 

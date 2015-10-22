@@ -1,0 +1,8 @@
+((:protocol        . "http")
+ (:host            . "DR1")
+ (:port            . 8000)
+ (:eval-path       . "/LATEST/eval")
+ (:documents-path  . "/LATEST/documents")
+ (:rest-apis-path  . "/LATEST/rest-apis")
+ (:user            . "admin")
+ (:password        . "passw0rd"))

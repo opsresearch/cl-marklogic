@@ -51,9 +51,9 @@
 (defun read-sample-connection (config)
   (read-connection 
     (merge-pathnames
-      (make-pathname :directory '(:relative "samples" "connection") :name config :type "rest")
+      (make-pathname :directory '(:relative "samples") :name config :type "rest")
       (asdf:system-source-directory :cl-marklogic))))
 
-(set-connection (read-sample-connection "localhost"))
+(set-connection (read-sample-connection "Cluster"))
 
 
