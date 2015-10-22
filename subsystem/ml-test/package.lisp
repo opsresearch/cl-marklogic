@@ -22,6 +22,7 @@
   (:use #:cl)
   (:export 
     #:test-all
+    #:test-with-servers
     #:test-marklogic
     #:test-optimizer
     ))

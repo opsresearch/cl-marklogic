@@ -54,6 +54,6 @@
       (make-pathname :directory '(:relative "samples") :name config :type "rest")
       (asdf:system-source-directory :cl-marklogic))))
 
-(set-connection (read-sample-connection "Cluster"))
+(set-connection (read-sample-connection "Localhost"))
 
 

@@ -20,7 +20,23 @@
 
 (in-package #:ml-test)
 
-(defun test-all()
+(defun test-all ()
 	"Run unit tests for cl-marklogic and subsystems."
   (test-marklogic)
   (test-optimizer))
+
+(defun test-with-servers ()
+  (ml-rest:with-connection
+    ((ml-rest:read-sample-connection "Server"))
+    (test-marklogic))
+  (ml-rest:with-connection
+    ((ml-rest:read-sample-connection "Server-DR"))
+    (test-marklogic))
+  (ml-rest:with-connection
+    ((ml-rest:read-sample-connection "Cluster"))
+    (test-marklogic))
+  (ml-rest:with-connection
+    ((ml-rest:read-sample-connection "Cluster-DR"))
+    (test-marklogic)))
+
+
