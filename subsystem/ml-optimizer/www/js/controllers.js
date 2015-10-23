@@ -149,8 +149,6 @@ angular.module('starter.controllers', [])
       function errorCallback(response) {
         $scope.forest = {};
       });
-  })
+  });
 
-.controller('OptForestsCtrl', function($scope, $http) {
-});
 

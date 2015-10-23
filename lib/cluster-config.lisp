@@ -48,10 +48,10 @@
         (T (with-open-file (stream from :direction :input)
                            (read stream)))))
 
-(defun read-sample-cluster-config (config)
+(defun load-cluster-config (config)
   (read-cluster-config 
     (merge-pathnames
-      (make-pathname :directory '(:relative "samples") :name config :type "ccfg")
+      (make-pathname :directory '(:relative "default-project") :name config :type "ccfg")
       (asdf:system-source-directory :cl-marklogic))))
 
 (defun cache-cluster-config ()
@@ -66,6 +66,4 @@
                          (cons :database-info (get-database-info))
                          (cons :forest-info (get-forest-info))
                          )))
-
-(set-cluster-config (read-sample-cluster-config "Server"))
 

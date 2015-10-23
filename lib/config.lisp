@@ -1,4 +1,4 @@
-;;;; connection.lisp
+;;;; config.lisp
 
 ;;;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -18,42 +18,43 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;;;
 
-(in-package #:ml-rest)
+(in-package #:cl-marklogic)
 
-(defvar *connection* nil
-  "A-list used by default to connect.
-  The macro with-connection can be used to override the connection.")
+(defvar *config* nil
+  "A-list used by default for configuration.
+  The macro with-config can be used to override the configuration.")
 
-(defun get-connection()
-  "Get the global connection value."
-  *connection*)
+(defun get-config()
+  "Get the global config value."
+  *config*)
 
-(defun set-connection(new-value)
-  "Set the global connection value."
-  (setf *connection* new-value))
+(defun set-config(new-value)
+  "Set the global config value."
+  (setf *config* new-value))
 
-(defmacro with-connection ((connection-value) &body body)
-  "Bind `connection-value` to *connection* to override the global connection a-list."
-  `(let ((*connection* ,connection-value))
+(defmacro with-config ((config-value) &body body)
+  "Bind `config-value` to *config* to override the global config a-list."
+  `(let ((*config* ,config-value))
      (progn
        ,@body)))
 
-(defun write-connection (&optional (to *standard-output*) &key (connection (get-connection)))
-  (cond ((streamp to)  (write connection :stream to :readably t))          
+(defun write-config (&optional (to *standard-output*) &key (config (get-config)))
+  (cond ((streamp to)  (write config :stream to :readably t))          
         (T (with-open-file (stream to :direction :output :if-exists :supersede)
-                           (write connection :stream stream :readably t)))))
+                           (write config :stream stream :readably t)))))
 
-(defun read-connection (&optional (from *standard-input*))
+(defun read-config (&optional (from *standard-input*))
   (cond ((streamp from)  (read from))
         (T (with-open-file (stream from :direction :input)
                            (read stream)))))
 
-(defun load-connection (config)
-  (read-connection 
+(defun load-config (config-name)
+  (read-config 
     (merge-pathnames
-      (make-pathname :directory '(:relative "default-project") :name config :type "rest")
+      (make-pathname :directory '(:relative "default-project") :name config-name :type "cfg")
       (asdf:system-source-directory :cl-marklogic))))
 
-
+(defun config-property (property-name &optional (config *config*))
+  (cdr (assoc property-name config)))
 
 

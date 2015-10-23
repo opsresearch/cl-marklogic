@@ -24,13 +24,21 @@
     #:ping
     #:echo
     
+    #:set-config
+    #:get-config
+    #:with-config
+    #:write-config
+    #:read-config
+    #:load-config
+    #:config-property
+    
     #:get-cluster-config
     #:set-cluster-config
     #:with-cluster-config
     #:get-cluster-config-from-connection
     #:write-cluster-config
     #:read-cluster-config
-    #:read-sample-cluster-config
+    #:load-cluster-config
     #:cache-cluster-config
     
     #:get-cluster-info
@@ -97,7 +105,7 @@
     #:with-connection
     #:write-connection
     #:read-connection
-    #:read-sample-connection
+    #:load-connection
  
     #:call
     #:eval-xquery

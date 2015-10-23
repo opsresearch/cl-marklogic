@@ -41,12 +41,13 @@
            (:file "group")
            (:file "xquery")
            (:file "document")
+           (:file "config")
            (:file "cluster-config")
            (:file "application")))
-      (:module ml-rest
+     (:module ml-rest
         :serial t
         :components 
             ((:file "connection")
             (:file "call")
             (:file "eval")))
-      ))
+     (:file "initialize")))

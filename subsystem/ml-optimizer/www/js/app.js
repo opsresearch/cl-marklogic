@@ -130,16 +130,6 @@ angular.module('starter', ['ionic', 'starter.controllers'])
           controller: 'ForestCtrl'
       }
     }
-  })
-
-  .state('app.opt-forests', {
-    url: "/opt-forests",
-    views: {
-        'menuContent': {
-            templateUrl: "templates/opt-forests.html",
-            controller: 'OptForestsCtrl'
-        }
-    }
   });
 
   // if none of the above states are matched, use this as the fallback

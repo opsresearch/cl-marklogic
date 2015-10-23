@@ -9,23 +9,23 @@
       <p>Host: <a href="#/app/hosts/{{forest.hostId}}">{{forest.hostName}}</a></p>
       <p>Database: <a href="#/app/databases/{{forest.databaseId}}">{{forest.databaseName}}</a></p>
       <p>Journals Size: {{forest.journalsSize}}</p>
-      <p>Data Dir: {{forest.dataDir}}</a></p>
       <p>Data Size: {{forest.dataSize}}</a></p>
       <p>Memory Size: {{forest.memorySize}}</a></p>
-      <p>Device Size: {{forest.deviceSize}}</a></p>
+      <p>Data Directory: {{forest.dataDir}}</a></p>
       <p>Device Space: {{forest.deviceSpace}}</a></p>
 
-
-      <p>Fast Data Dir: {{forest.fastDataDir}}</a></p>
       <p>Fast Data Size: {{forest.fastDataSize}}</a></p>
       <p>Fast Memory Size: {{forest.fastMemorySize}}</a></p>
+      <p>Fast Directory: {{forest.fastDir}}</a></p>
+      <p>Fast Device Space: {{forest.fastDeviceSpace}}</a></p>
 
-      <p>Large Data Dir: {{forest.largeDataDir}}</a></p>
       <p>Large Data Size: {{forest.largeDataSize}}</a></p>
+      <p>Large Directory: {{forest.largeDir}}</a></p>
+      <p>Large Device Space: {{forest.largeDeviceSpace}}</a></p>
 
       <p>Master Forest: <a href="#/app/forests/{{forest.masterForestId}}">{{forest.masterForestName}}</a></p>
       <p>Replica Forests: <span ng-repeat="forest in [].concat(forest.replicaForests)">
-                <a href="#/app/hosts/{{host.hostId}}">{{host.hostName}}</a>
+                <a href="#/app/forests/{{forest.forestId}}">{{forest.forestName}}</a>
         </span></p>
 
       </div>

@@ -27,16 +27,13 @@
 
 (defun test-with-servers ()
   (ml-rest:with-connection
-    ((ml-rest:read-sample-connection "Server"))
+    ((ml-rest:load-connection "Server"))
     (test-marklogic))
   (ml-rest:with-connection
-    ((ml-rest:read-sample-connection "Server-DR"))
+    ((ml-rest:load-connection "Cluster"))
     (test-marklogic))
   (ml-rest:with-connection
-    ((ml-rest:read-sample-connection "Cluster"))
-    (test-marklogic))
-  (ml-rest:with-connection
-    ((ml-rest:read-sample-connection "Cluster-DR"))
+    ((ml-rest:load-connection "Cluster-DR"))
     (test-marklogic)))
 
 
