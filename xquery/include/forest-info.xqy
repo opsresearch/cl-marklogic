@@ -18,17 +18,16 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;:)
 
+declare function local:i2s($ids){for $id in $ids return xs:string($id)};
+
 declare function local:add-status-props($forest-id, $props){
 
  let $config := admin:get-configuration()
  let $status := xdmp:forest-status($forest-id)
  return (
 
-    map:put($props, ':master-forest-id',         
+    map:put($props, ':master-forest',         
       $status/fs:master-forest/text()),
-
-    map:put($props, ':master-forest-name',         
-    admin:forest-get-name($config, xs:unsignedLong($status/fs:master-forest/text()))),
 
     map:put($props, ':journals-size', 
       xs:unsignedLong($status/fs:journals-size/text())),
@@ -66,23 +65,13 @@ declare function local:forest-info() {
         map:put($props, ':time-stamp', current-dateTime()),
         map:put($props, ':forest-id', xs:string($forest-id)),
         map:put($props, ':forest-name', admin:forest-get-name($config, $forest-id)),
-
-
         map:put($props, ':host-id', xs:string(admin:forest-get-host($config, $forest-id))),
-        map:put($props, ':host-name', admin:host-get-name($config, admin:forest-get-host($config, $forest-id))),
         map:put($props, ':database-id', xs:string(admin:forest-get-database($config, $forest-id))),
-        map:put($props, ':database-name', admin:database-get-name($config, admin:forest-get-database($config, $forest-id))),
         map:put($props, ':data-dir', admin:forest-get-data-directory($config, $forest-id)),
         map:put($props, ':large-dir', admin:forest-get-large-data-directory($config, $forest-id)),
         map:put($props, ':fast-dir', admin:forest-get-fast-data-directory($config, $forest-id)),
         local:add-status-props($forest-id, $props),
-        map:put($props, ':replica-forests', 
-          for $id in admin:forest-get-replicas($config, $forest-id)
-            let $m := map:map()
-            let $_ := map:put($m, ':forest-id', xs:string($id))
-            let $_ := map:put($m, ':forest-name', admin:forest-get-name($config, $id))
-            return $m)
-        )
+        map:put($props, ':replica-forests', local:i2s(admin:forest-get-replicas($config, $forest-id))))
       return map:put($forests, xs:string($forest-id), $props)
 
 return $forests

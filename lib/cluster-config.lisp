@@ -38,21 +38,15 @@
      (progn
        ,@body)))
 
-(defun write-cluster-config (&optional (to *standard-output*) &key (config (get-cluster-config)))
+(defun write-cluster-config (to &optional (config (get-cluster-config)))
   (cond ((streamp to)  (write config :stream to :readably t))          
         (T (with-open-file (stream to :direction :output :if-exists :supersede)
                            (write config :stream stream :readably t)))))
 
-(defun read-cluster-config (&optional (from *standard-input*))
+(defun read-cluster-config (from)
   (cond ((streamp from)  (read from))
         (T (with-open-file (stream from :direction :input)
                            (read stream)))))
-
-(defun load-cluster-config (config)
-  (read-cluster-config 
-    (merge-pathnames
-      (make-pathname :directory '(:relative "default-project") :name config :type "ccfg")
-      (asdf:system-source-directory :cl-marklogic))))
 
 (defun cache-cluster-config ()
   (set-cluster-config (get-cluster-config-from-connection)))
@@ -60,10 +54,34 @@
 (defun get-cluster-config-from-connection ()
   (with-cluster-config (nil)
                        (list
+                         (cons :type "ccfg")
+                         (cons :version "1")
+                         (cons :name (ml-rest:connection-property :name))
                          (cons :cluster-info (get-cluster-info))
                          (cons :group-info (get-group-info))
                          (cons :host-info (get-host-info))
                          (cons :database-info (get-database-info))
                          (cons :forest-info (get-forest-info))
+                         (cons :id-names (get-id-names))
                          )))
+
+(defun cluster-config-property (property-name &optional (cluster-config *cluster-config*))
+  (cdr (assoc property-name cluster-config)))
+
+(defun load-cluster-config (cluster-config-name)
+  (let ((config (read-cluster-config 
+                  (merge-pathnames
+                    (make-pathname :directory '(:relative "default-project") :name cluster-config-name :type "ccfg")
+                    (asdf:system-source-directory :cl-marklogic)))))
+    (cond ((not (equal (cluster-config-property :type config) "ccfg")) nil)
+          ((not (equal (cluster-config-property :version config) "1")) nil)
+          (T config)
+          )))
+
+(defun save-cluster-config (&optional (config *cluster-config*))
+  (write-cluster-config 
+    (merge-pathnames
+      (make-pathname :directory '(:relative "default-project") :name (cluster-config-property :name config) :type "ccfg")
+      (asdf:system-source-directory :cl-marklogic))))
+
 

@@ -29,9 +29,7 @@ declare function local:cluster-info() {
         map:put($props, ':time-stamp', current-dateTime()),
         map:put($props, ':cluster-id', xs:string($cluster-id)),
         map:put($props, ':cluster-name',  xdmp:cluster-name($cluster-id)),
-        map:put($props, ':local-cluster-p', $cluster-id eq admin:cluster-get-id($config))
-
-      )
+        map:put($props, ':local-cluster-p', $cluster-id eq admin:cluster-get-id($config)))
       return map:put($clusters, xs:string($cluster-id), $props)
 
 return $clusters

@@ -1,4 +1,4 @@
-;;;; initialize.lisp
+;;;; id-names.lisp
 
 ;;;; ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -20,24 +20,16 @@
 
 (in-package #:cl-marklogic)
 
-; init config
-(set-config (load-config "Default"))
-
-; init connection
-(ml-rest:set-connection (ml-rest:load-connection (config-property :default-connection-name)))
-
-; init cluster config
-(set-cluster-config (load-cluster-config (config-property :default-cluster-config-name)))
-
-(defun save-all-ccfg ()
-  (ml-rest:set-connection (ml-rest:load-connection "Server"))
-  (cache-cluster-config)
-  (save-cluster-config)
-  
-  (ml-rest:set-connection (ml-rest:load-connection "Cluster"))
-  (cache-cluster-config)
-  (save-cluster-config)
-
-  (ml-rest:set-connection (ml-rest:load-connection "Cluster-DR"))
-  (cache-cluster-config)
-  (save-cluster-config))
+(defun get-id-names()
+  "Get a two tier nested a-lists containing the names associated with an ID."
+  (let ((id-names (assoc :id-names *cluster-config*)))
+    (if id-names (cdr id-names)
+        (evaluate-xquery
+          "
+          xquery version '1.0-ml';
+          import module namespace admin = 'http://marklogic.com/xdmp/admin' at '/MarkLogic/admin.xqy';
+          (:#include to-sexpy :)
+          (:#include id-names :)
+          local:to-sexpy(local:id-names())
+          "
+          ))))

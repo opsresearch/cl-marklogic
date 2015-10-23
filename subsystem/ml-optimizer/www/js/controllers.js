@@ -61,6 +61,12 @@ angular.module('starter.controllers', [])
       function errorCallback(response) {
         $scope.cluster = {};
       });
+    $http.get('api/id-names').then(function successCallback(response) {
+        $scope.idNames = response.data;
+      },
+      function errorCallback(response) {
+        $scope.idNames = [];
+      });
   })
 
 .controller('GroupsCtrl', function($scope, $http) {
@@ -83,7 +89,13 @@ angular.module('starter.controllers', [])
       function errorCallback(response) {
         $scope.group = {};
       });
-  })
+     $http.get('api/id-names').then(function successCallback(response) {
+        $scope.idNames = response.data;
+      },
+      function errorCallback(response) {
+        $scope.idNames = [];
+      });
+ })
 
 .controller('HostsCtrl', function($scope, $http) {
     $http.get('api/host').then(function successCallback(response) {
@@ -104,6 +116,12 @@ angular.module('starter.controllers', [])
       },
       function errorCallback(response) {
         $scope.host = {};
+      });
+    $http.get('api/id-names').then(function successCallback(response) {
+        $scope.idNames = response.data;
+      },
+      function errorCallback(response) {
+        $scope.idNames = [];
       });
   })
 
@@ -127,6 +145,12 @@ angular.module('starter.controllers', [])
       function errorCallback(response) {
         $scope.database = {};
       });
+    $http.get('api/id-names').then(function successCallback(response) {
+        $scope.idNames = response.data;
+      },
+      function errorCallback(response) {
+        $scope.idNames = [];
+      });
   })
 
 .controller('ForestsCtrl', function($scope, $http) {
@@ -149,6 +173,12 @@ angular.module('starter.controllers', [])
       function errorCallback(response) {
         $scope.forest = {};
       });
+     $http.get('api/id-names').then(function successCallback(response) {
+        $scope.idNames = response.data;
+      },
+      function errorCallback(response) {
+        $scope.idNames = [];
+     });
   });
 
 

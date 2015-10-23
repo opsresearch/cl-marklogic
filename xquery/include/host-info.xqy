@@ -31,8 +31,7 @@ declare function local:host-info() {
         map:put($props, ':host-name',   admin:host-get-name($config, $host-id)),
         map:put($props, ':bind-port',   admin:host-get-port($config, $host-id)),
         map:put($props, ':group-id',    xs:string(admin:host-get-group($config, $host-id))),
-        map:put($props, ':zone',        admin:host-get-zone($config, $host-id))
-      )
+        map:put($props, ':zone',        admin:host-get-zone($config, $host-id)))
       return map:put($hosts, xs:string($host-id), $props)
 
 return $hosts

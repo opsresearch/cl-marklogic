@@ -2,16 +2,17 @@
   <ion-content>
     <div class="list card">
       <div class="item">
-        <h3>{{database.databaseName}}</h3>
+        <h1>{{database.databaseName}}</h1>
       </div>
       <div class="item item-body">
-        <p>Id: {{database.databaseId}}</p>
 
-        <p>Forests: <span ng-repeat="forest in [].concat(database.forests)">
-                <a href="#/app/forests/{{forest.forestId}}">{{forest.forestName}}</a>
-        </span></p>
-      
+      <ion-list>
+      <ion-item ng-repeat="forest in [].concat(database.forests)"
+                href="#/app/forests/{{forest}}">{{idNames[forest]}}</ion-item>
+      </ion-list>
+
       </div>
+      
       <div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item">
           <i class="icon ion-thumbsup"></i>

@@ -2,14 +2,14 @@
   <ion-content>
     <div class="list card">
       <div class="item">
-        <h3>{{group.groupName}}</h3>
+        <h1>{{group.groupName}}</h1>
       </div>
       <div class="item item-body">
-        <p>Id: {{group.groupId}}</p>
 
-       <p>Hosts: <span ng-repeat="host in [].concat(group.hosts)">
-                <a href="#/app/hosts/{{host.hostId}}">{{host.hostName}}</a>
-        </span></p>
+      <ion-list>
+      <ion-item ng-repeat="host in [].concat(group.hosts)"
+                href="#/app/hosts/{{host}}">{{idNames[host]}}</ion-item>
+      </ion-list>
 
       </div>
       <div class="item tabs tabs-secondary tabs-icon-left">

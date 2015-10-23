@@ -18,26 +18,21 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;:)
 
+declare function local:i2s($ids){for $id in $ids return xs:string($id)};
+
 declare function local:database-info() { 
 
   let $config := admin:get-configuration()
   let $databases := map:map()
   let $_ :=
-    for $database-id in admin:get-database-ids($config)
-      let $props := map:map()
-      let $_ := (
-        map:put($props, ':time-stamp', current-dateTime()),
-        map:put($props, ':database-id', xs:string($database-id)),
-        map:put($props, ':database-name', admin:database-get-name($config, $database-id)),
-
-        map:put($props, ':forests', 
-          for $id in admin:database-get-attached-forests($config, $database-id)
-            let $m := map:map()
-            let $_ := map:put($m, ':forest-id', xs:string($id))
-            let $_ := map:put($m, ':forest-name', admin:forest-get-name($config, $id))
-            return $m)
-        )
-      return map:put($databases, xs:string($database-id), $props)
+  for $database-id in admin:get-database-ids($config)
+    let $props := map:map()
+    let $_ := (
+      map:put($props, ':time-stamp', current-dateTime()),
+      map:put($props, ':database-id', xs:string($database-id)),
+      map:put($props, ':database-name', admin:database-get-name($config, $database-id)),
+      map:put($props, ':forests', local:i2s(admin:database-get-attached-forests($config, $database-id))))
+    return map:put($databases, xs:string($database-id), $props)
 
 return $databases
 };

@@ -38,23 +38,29 @@
      (progn
        ,@body)))
 
-(defun write-config (&optional (to *standard-output*) &key (config (get-config)))
+(defun write-config (to &optional (config (get-config)))
   (cond ((streamp to)  (write config :stream to :readably t))          
         (T (with-open-file (stream to :direction :output :if-exists :supersede)
                            (write config :stream stream :readably t)))))
 
-(defun read-config (&optional (from *standard-input*))
+(defun read-config (from)
   (cond ((streamp from)  (read from))
         (T (with-open-file (stream from :direction :input)
                            (read stream)))))
 
-(defun load-config (config-name)
-  (read-config 
-    (merge-pathnames
-      (make-pathname :directory '(:relative "default-project") :name config-name :type "cfg")
-      (asdf:system-source-directory :cl-marklogic))))
-
 (defun config-property (property-name &optional (config *config*))
   (cdr (assoc property-name config)))
+
+(defun load-config (config-name)
+  (let ((config 
+          (read-config 
+            (merge-pathnames
+              (make-pathname :directory '(:relative "default-project") :name config-name :type "cfg")
+              (asdf:system-source-directory :cl-marklogic)))))
+    (cond ((not (equal (config-property :type config) "cfg")) (print "Invalid :type"))
+          ((not (equal (config-property :version config) "1")) (print "Invalid :version"))
+          (T config)
+          )))
+
 
 

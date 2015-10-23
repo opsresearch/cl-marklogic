@@ -38,6 +38,7 @@
            (:file "forest")
            (:file "host")
            (:file "cluster")
+           (:file "id-names")
            (:file "group")
            (:file "xquery")
            (:file "document")

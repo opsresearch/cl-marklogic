@@ -38,22 +38,27 @@
      (progn
        ,@body)))
 
-(defun write-connection (&optional (to *standard-output*) &key (connection (get-connection)))
+(defun write-connection (to &optional (connection (get-connection)))
   (cond ((streamp to)  (write connection :stream to :readably t))          
         (T (with-open-file (stream to :direction :output :if-exists :supersede)
                            (write connection :stream stream :readably t)))))
 
-(defun read-connection (&optional (from *standard-input*))
+(defun read-connection (from)
   (cond ((streamp from)  (read from))
         (T (with-open-file (stream from :direction :input)
                            (read stream)))))
 
-(defun load-connection (config)
-  (read-connection 
-    (merge-pathnames
-      (make-pathname :directory '(:relative "default-project") :name config :type "rest")
-      (asdf:system-source-directory :cl-marklogic))))
+(defun connection-property (property-name &optional (connection *connection*))
+  (cdr (assoc property-name connection)))
 
-
-
+(defun load-connection (connection-name)
+  (let ((config 
+          (read-connection 
+            (merge-pathnames
+              (make-pathname :directory '(:relative "default-project") :name connection-name :type "rest")
+              (asdf:system-source-directory :cl-marklogic)))))
+    (cond ((not (equal (connection-property :type config) "rest")) nil)
+          ((not (equal (connection-property :version config) "1")) nil)
+          (T config)
+          )))
 

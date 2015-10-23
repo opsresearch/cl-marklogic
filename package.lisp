@@ -30,6 +30,7 @@
     #:write-config
     #:read-config
     #:load-config
+    #:save-config
     #:config-property
     
     #:get-cluster-config
@@ -39,7 +40,11 @@
     #:write-cluster-config
     #:read-cluster-config
     #:load-cluster-config
+    #:save-cluster-config
+    #:cluster-config-property
     #:cache-cluster-config
+    
+    #:get-id-names
     
     #:get-cluster-info
     #:cluster-ids
@@ -106,7 +111,9 @@
     #:write-connection
     #:read-connection
     #:load-connection
- 
+    #:save-connection
+    #:connection-property
+    
     #:call
     #:eval-xquery
     ))

@@ -2,10 +2,9 @@
   <ion-content>
     <div class="list card">
       <div class="item">
-        <h3>{{forest.forestName}}</h3>
+        <h1>{{forest.forestName}}</h1>
       </div>
       <div class="item item-body">
-      <p>Id: {{forest.forestId}}</p>
       <p>Host: <a href="#/app/hosts/{{forest.hostId}}">{{forest.hostName}}</a></p>
       <p>Database: <a href="#/app/databases/{{forest.databaseId}}">{{forest.databaseName}}</a></p>
       <p>Journals Size: {{forest.journalsSize}}</p>
@@ -23,10 +22,11 @@
       <p>Large Directory: {{forest.largeDir}}</a></p>
       <p>Large Device Space: {{forest.largeDeviceSpace}}</a></p>
 
-      <p>Master Forest: <a href="#/app/forests/{{forest.masterForestId}}">{{forest.masterForestName}}</a></p>
-      <p>Replica Forests: <span ng-repeat="forest in [].concat(forest.replicaForests)">
-                <a href="#/app/forests/{{forest.forestId}}">{{forest.forestName}}</a>
-        </span></p>
+      <p>Master Forest: <a href="#/app/forests/{{forest.masterForest}}">{{idNames[forest.masterForest]}}</a></p>
+      <p>Replica Forests:
+      <span ng-repeat=" rf in [].concat(forest.replicaForests)">
+        <a href="#/app/forests/{{rf}}">{{idNames[rf]}}</a>
+      </span></p>
 
       </div>
       <div class="item tabs tabs-secondary tabs-icon-left">

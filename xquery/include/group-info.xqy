@@ -18,6 +18,8 @@
 ;;;; 
 ;;;; ;;;;; END LICENSE BLOCK ;;;:)
 
+declare function local:i2s($ids){for $id in $ids return xs:string($id)};
+
 declare function local:group-info() { 
 
   let $config := admin:get-configuration()
@@ -34,13 +36,7 @@ declare function local:group-info() {
         map:put($props, ':performance-metering-retain-daily', admin:group-get-performance-metering-retain-daily($config, $group-id)),
         map:put($props, ':performance-metering-retain-hourly', admin:group-get-performance-metering-retain-hourly($config, $group-id)),
         map:put($props, ':performance-metering-retain-raw', admin:group-get-performance-metering-retain-raw($config, $group-id)),
-        map:put($props, ':hosts', 
-          for $id in admin:group-get-host-ids($config, $group-id)
-            let $m := map:map()
-            let $_ := map:put($m, ':host-id', xs:string($id))
-            let $_ := map:put($m, ':host-name', admin:host-get-name($config, $id))
-            return $m)
-        )
+        map:put($props, ':hosts', local:i2s(admin:group-get-host-ids($config, $group-id))))
       return map:put($groups, xs:string($group-id), $props)
 
 return $groups
