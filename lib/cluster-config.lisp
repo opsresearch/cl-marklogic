@@ -67,5 +67,5 @@
                          (cons :forest-info (get-forest-info))
                          )))
 
-;(set-cluster-config (read-sample-cluster-config "out-of-the-box"))
+(set-cluster-config (read-sample-cluster-config "Server"))
 
