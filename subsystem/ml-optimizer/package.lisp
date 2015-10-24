@@ -21,5 +21,15 @@
 
 (defpackage #:ml-optimizer
   (:use #:cl)
-  (:export #:start))
+  (:export 
+    #:start
+    #:set-dependent-hosts
+    #:get-dependent-hosts
+    #:with-dependent-hosts
+    #:write-dependent-hosts
+    #:read-dependent-hosts
+    #:load-dependent-hosts
+    #:save-dependent-hosts
+    #:dependent-hosts-property
+    ))
 

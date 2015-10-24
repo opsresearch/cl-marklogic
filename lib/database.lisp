@@ -32,6 +32,9 @@
   "Get a list the database ids in the cluster."
   (mapcar #'car database-info))
 
+(defun database-find-id-by-property (property value &optional (info (get-database-info)))
+      (car (find value info :test (lambda (val entry) (equal val (cdr(assoc property (cdr entry))))))))
+
 (defun database-properties (database-id &optional (database-info (get-database-info)))
   "Get the properties for a database-id."
   (cdr (assoc database-id database-info :test #'equal)))
@@ -44,7 +47,7 @@
       :database-name   -> String name of the database.
       :forests         -> Attached forest IDs.
   "
-  (cdr (assoc property (cdr (assoc database-id database-info)))))
+  (cdr (assoc property (database-properties database-id database-info))))
 
 (defun get-database-info()
   "Get a two tier nested a-lists containing properties of all of the databases in the cluster."

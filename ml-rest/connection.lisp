@@ -59,6 +59,11 @@
               (asdf:system-source-directory :cl-marklogic)))))
     (cond ((not (equal (connection-property :type config) "rest")) nil)
           ((not (equal (connection-property :version config) "1")) nil)
-          (T config)
-          )))
+          (T config))))
 
+(defun save-connection (&optional (connection *connection*))
+  (write-connection 
+    (merge-pathnames
+      (make-pathname :directory '(:relative "default-project") :name (connection-property :name connection) :type "rest")
+      (asdf:system-source-directory :cl-marklogic))
+    connection))

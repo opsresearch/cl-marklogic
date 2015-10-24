@@ -75,13 +75,13 @@
                     (asdf:system-source-directory :cl-marklogic)))))
     (cond ((not (equal (cluster-config-property :type config) "ccfg")) nil)
           ((not (equal (cluster-config-property :version config) "1")) nil)
-          (T config)
-          )))
+          (T config))))
 
-(defun save-cluster-config (&optional (config *cluster-config*))
+(defun save-cluster-config (&optional (cluster-config *cluster-config*))
   (write-cluster-config 
     (merge-pathnames
-      (make-pathname :directory '(:relative "default-project") :name (cluster-config-property :name config) :type "ccfg")
-      (asdf:system-source-directory :cl-marklogic))))
+      (make-pathname :directory '(:relative "default-project") :name (cluster-config-property :name cluster-config) :type "ccfg")
+      (asdf:system-source-directory :cl-marklogic))
+    cluster-config))
 
 

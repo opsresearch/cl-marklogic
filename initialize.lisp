@@ -27,7 +27,8 @@
 (ml-rest:set-connection (ml-rest:load-connection (config-property :default-connection-name)))
 
 ; init cluster config
-(set-cluster-config (load-cluster-config (config-property :default-cluster-config-name)))
+(set-cluster-config (load-cluster-config (config-property :default-load-name)))
+
 
 (defun save-all-ccfg ()
   (ml-rest:set-connection (ml-rest:load-connection "Server"))

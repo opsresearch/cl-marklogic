@@ -32,6 +32,9 @@
   "Get a list the host ids in the cluster."
   (mapcar #'car host-info))
 
+(defun host-find-id-by-property (property value &optional (info (get-host-info)))
+      (car (find value info :test (lambda (val entry) (equal val (cdr(assoc property (cdr entry))))))))
+
 (defun host-properties (host-id &optional (host-info (get-host-info)))
   "Get the properties for a host-id."
   (cdr (assoc host-id host-info :test #'equal)))
@@ -46,7 +49,7 @@
       :host    -> Id of the host to which this host belongs.
       :zone     -> Zone where this host is assigned.
   "
-  (cdr (assoc property (cdr (assoc host-id host-info)))))
+  (cdr (assoc property (host-properties host-id host-info))))
 
 (defun get-host-info()
   "Get a two tier nested a-lists containing properties of all of the hosts in the cluster."
@@ -61,5 +64,8 @@
           local:to-sexpy(local:host-info())
           "
           ))))
+
+
+
 
 

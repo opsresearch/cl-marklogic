@@ -52,6 +52,7 @@
     #:cluster-name-p
     #:cluster-property
     #:cluster-properties
+    #:cluster-find-id-by-property
     
     #:get-group-info
     #:group-ids
@@ -59,6 +60,7 @@
     #:group-name-p
     #:group-property
     #:group-properties
+    #:group-find-id-by-property
     
     #:get-host-info
     #:host-ids
@@ -66,6 +68,7 @@
     #:host-name-p
     #:host-property
     #:host-properties
+    #:host-find-id-by-property
     
     #:get-database-info
     #:database-ids
@@ -75,6 +78,7 @@
     #:database-properties
     #:database-attach-forest
     #:database-create
+    #:database-find-id-by-property
     
     #:get-forest-info
     #:forest-ids
@@ -84,6 +88,7 @@
     #:forest-properties
     #:get-forest-status
     #:forest-create
+    #:forest-find-id-by-property
     
     #:evaluate-xquery
     #:host-time

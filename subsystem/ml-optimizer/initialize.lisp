@@ -1,4 +1,4 @@
-;;;; ml-optimizer.asd
+;;;; initialize.lisp
 
 ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -19,32 +19,7 @@
 ;;;; 
 ;;;; END LICENSE BLOCK ;;;;;
 
-(asdf:defsystem #:ml-optimizer
-  :description "Common Lisp application to optimize MarkLogic clusters."
-  :author "Donald Anderson <dranderson@OpsResearch.com>"
-  :license "AGPL3"
-  :depends-on
-    (#:hunchentoot
-     #:cl-json
-     #:cl-marklogic
-     #:cl-opsresearch)
-  :serial t
-  :components
-    ((:file "package")
-      (:file "ml-optimizer")
-      (:module lib
-        :serial t
-        :components 
-          ((:file "dependent-hosts")))
-      (:module services
-      :serial t
-      :components 
-        ((:file "services")
-        (:file "cluster")
-        (:file "group")
-        (:file "host")
-        (:file "database")
-        (:file "forest")
-        (:file "id-names")))
-      (:file "initialize")))
+(in-package #:ml-optimizer)
 
+; init dependent hosts
+(set-dependent-hosts (load-dependent-hosts (cl-marklogic:config-property :default-load-name)))

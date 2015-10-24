@@ -32,6 +32,9 @@
   "Get a list of the cluster ids known to the local cluster."
   (mapcar #'car cluster-info))
 
+(defun cluster-find-id-by-property (property value &optional (info (get-cluster-info)))
+      (car (find value info :test (lambda (val entry) (equal val (cdr(assoc property (cdr entry))))))))
+
 (defun cluster-properties (cluster-id &optional (cluster-info (get-cluster-info)))
   "Get the properties for a cluster-id."
   (cdr (assoc cluster-id cluster-info :test #'equal)))
@@ -42,7 +45,7 @@
       :time-stamp -> The date and time this a-list was created.
       :cluster-id    -> Id of this cluster.
   "
-  (cdr (assoc property (cdr (assoc cluster-id cluster-info)))))
+  (cdr (assoc property (cluster-properties cluster-id cluster-info))))
 
 (defun get-cluster-info()
   "Get a two tier nested a-lists containing properties of all of the clusters in the cluster."

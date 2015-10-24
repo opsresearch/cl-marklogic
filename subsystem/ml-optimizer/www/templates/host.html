@@ -8,6 +8,7 @@
         <p>Group: <a href="#/app/groups/{{host.groupId}}">{{idNames[host.groupId]}}</a></p>
         <p>Zone: {{host.zone}}</p>
         <p>Bind Port: {{host.bindPort}}</p>
+        <p>Dependencies: <span ng-repeat=" set in [].concat(host.dependentSets)">&nbsp;{{set}}&nbsp;</span></p>
       </div>
       <div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item">

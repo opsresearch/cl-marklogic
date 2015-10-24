@@ -43,6 +43,7 @@
            (:file "xquery")
            (:file "document")
            (:file "config")
+           (:file "dependent-hosts")
            (:file "cluster-config")
            (:file "application")))
      (:module ml-rest

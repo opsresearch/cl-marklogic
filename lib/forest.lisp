@@ -32,6 +32,9 @@
   "Get a list of the forest ids in the cluster."
   (mapcar #'car forest-info))
 
+(defun forest-find-id-by-property (property value &optional (info (get-forest-info)))
+      (car (find value info :test (lambda (val entry) (equal val (cdr(assoc property (cdr entry))))))))
+
 (defun forest-properties (forest-id &optional (forest-info (get-forest-info)))
   "Get the properties for a forest-id."
   (cdr (assoc forest-id forest-info :test #'equal)))
@@ -59,7 +62,7 @@
       :large-device-space -> Available space on the large device (MB).
       :fast-device-space  -> Available space on the fast device (MB).
   "
-  (cdr (assoc property (cdr (assoc forest-id forest-info)))))
+  (cdr (assoc property (forest-properties forest-id forest-info))))
 
 (defun get-forest-info()
   "Get a two tier nested a-lists containing properties of all of the forests in the cluster."

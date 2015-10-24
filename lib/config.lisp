@@ -59,8 +59,12 @@
               (asdf:system-source-directory :cl-marklogic)))))
     (cond ((not (equal (config-property :type config) "cfg")) (print "Invalid :type"))
           ((not (equal (config-property :version config) "1")) (print "Invalid :version"))
-          (T config)
-          )))
+          (T config))))
 
-
+(defun save-config (&optional (config *config*))
+  (write-config 
+    (merge-pathnames
+      (make-pathname :directory '(:relative "default-project") :name (config-property :name config) :type "cfg")
+      (asdf:system-source-directory :cl-marklogic))
+    config))
 

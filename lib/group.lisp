@@ -32,6 +32,9 @@
   "Get a list the group ids in the group."
   (mapcar #'car group-info))
 
+(defun group-find-id-by-property (property value &optional (info (get-group-info)))
+      (car (find value info :test (lambda (val entry) (equal val (cdr(assoc property (cdr entry))))))))
+
 (defun group-properties (group-id &optional (group-info (get-group-info)))
   "Get the properties for a group-id."
   (cdr (assoc group-id group-info :test #'equal)))
@@ -43,7 +46,7 @@
       :group-id    -> Id of this group.
       :group-name  -> String name of this group.
   "
-  (cdr (assoc property (cdr (assoc group-id group-info)))))
+  (cdr (assoc property (group-properties group-id group-info))))
 
 (defun get-group-info()
   "Get a two tier nested a-lists containing properties of all of the groups in the group."
@@ -58,5 +61,6 @@
           local:to-sexpy(local:group-info())
           "
           ))))
+
 
 

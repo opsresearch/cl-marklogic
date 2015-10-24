@@ -25,7 +25,7 @@
   	(json:encode-json-to-string (mapcar #'cdr (cl-marklogic:get-host-info))))
 
 (defun host-detail (host-id)
-   (json:encode-json-to-string (cl-marklogic:host-properties host-id)))
+   (json:encode-json-to-string (add-host-dependencies host-id (cl-marklogic:host-properties host-id))))
 
 (hunchentoot:define-easy-handler (host :uri "/api/host" :default-request-type :get)
                                  (id)

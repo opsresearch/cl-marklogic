@@ -1,0 +1,16 @@
+((:type          . "dpnd")
+(:version        . "1")
+(:name           . "Cluster")
+(:sets           . (
+
+("Rack-1" . ("ml1.opsresearch.com" "ml2.opsresearch.com"))
+("Rack-2" . ("ml3.opsresearch.com" "ml4.opsresearch.com"))
+("Rack-3" . ("ml5.opsresearch.com" "ml6.opsresearch.com"))
+("Rack-4" . ("ml7.opsresearch.com" "ml8.opsresearch.com"))
+
+(Switch-1 . ("Rack-1" "Rack-2"))
+(Switch-2 . ("Rack-3" "Rack-4"))
+
+(SAN-1 . ("Rack-1" "Rack-3"))
+(SAN-2 . ("Rack-2" "Rack-4")))))
+
