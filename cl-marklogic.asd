@@ -25,7 +25,8 @@
   :depends-on
     (#:drakma
      #:local-time
-     #:fiveam)
+     #:fiveam
+     #:alexandria)
   :serial t
   :components 
     ((:file "package")

@@ -9,6 +9,12 @@
         <p>Zone: {{host.zone}}</p>
         <p>Bind Port: {{host.bindPort}}</p>
         <p>Dependencies: <span ng-repeat=" set in [].concat(host.dependentSets)">&nbsp;{{set}}&nbsp;</span></p>
+
+        <p>Independent Hosts:
+          <span ng-repeat=" host in [].concat(host.independentHosts)">
+            <a href="#/app/hosts/{{host}}">{{idNames[host]}}</a>
+          </span></p>
+
       </div>
       <div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item">

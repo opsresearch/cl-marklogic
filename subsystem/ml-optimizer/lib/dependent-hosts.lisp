@@ -68,11 +68,47 @@
       (make-pathname :directory '(:relative "default-project") :name (dependent-hosts-property :name dependent-hosts) :type "dpnd")
       (asdf:system-source-directory :ml-optimizer))))
 
-(defun get-host-dependent-set-names (host-name)
-  nil)
+(defun expand-set-name (set-name host-sets &optional (max-depth 10))
+  (let ((set (assoc set-name host-sets :test #'equal)))
+    (if (and set (> max-depth 0))
+        (alexandria:flatten
+          (mapcar (lambda (name) (expand-set-name name host-sets (- max-depth 1))) (cdr set))) 
+        set-name)))
 
-(defun add-host-dependencies (host-id host-properties &optional (host-info (cl-marklogic:get-host-info)))
-  (let ((host-name (cl-marklogic:host-property host-id :host-name host-info)))
-    (cons (cons :dependent-sets '("Rack-1" "Switch-1" "SAN-1")) host-properties)))
+(defun expand-host-set (host-set host-sets)
+  (cons (car host-set) (expand-set-name (car host-set) host-sets)))
 
+(defun expand-host-sets (host-sets)
+  (mapcar (lambda (set) (expand-host-set set host-sets)) host-sets))
 
+(defun get-expanded-host-sets ()
+  (expand-host-sets (dependent-hosts-property :host-sets)))
+
+(defun host-name-to-set-names (host-name &optional (expanded-sets (get-expanded-host-sets)))
+  (remove nil (mapcar (lambda (set) (if (find host-name (cdr set) :test #'equal) (car set) nil))
+                      expanded-sets)))
+
+(defun set-names-to-host-names (set-names &optional (expanded-sets (get-expanded-host-sets)))
+  (remove-duplicates
+    (alexandria:flatten
+      (mapcar (lambda (name) (cdr (assoc name expanded-sets :test #'equal))) set-names))
+    :test #'equal))
+
+(defun get-dependent-host-names (host-name)
+  (remove-duplicates
+    (cons host-name
+          (set-names-to-host-names
+            (host-name-to-set-names host-name)))
+    :test #'equal))
+
+(defun get-independent-host-names (host-name)
+  (set-difference (cl-marklogic:host-names) (get-dependent-host-names host-name) :test #'equal))
+
+(defun add-host-dependencies (host-id host-info)
+  (let ((host-name (cl-marklogic:host-property host-id :host-name)))
+    (cons (cons :dependent-sets (host-name-to-set-names host-name))
+          (cons (cons :independent-hosts 
+                      (cl-marklogic:host-find-id-by-property 
+                        :host-name 
+                        (get-independent-host-names host-name))) host-info))))
+                      
