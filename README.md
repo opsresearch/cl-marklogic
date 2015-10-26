@@ -1,5 +1,5 @@
 # cl-marklogic
-Common Lisp library for accessing MarkLogic Server.
+Common Lisp system for accessing MarkLogic Server.
 
 ML-Optimizer [Demonstration](http://opsresearch.com/demo/ml-optimizer/).
 
