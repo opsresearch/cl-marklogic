@@ -30,7 +30,7 @@ This quick tutorial shows you how to run some simple examples using *cl-marklogi
   ```
   (ql:quickload "cl-marklogic")
   ```
-   >The first time you load *cl-marklogic*, *QuickLisp* will download it and the dependencies from the repository.
+   >The first time you load *cl-marklogic*, *QuickLisp* will download it and any dependencies from the repository.
 
 #### 6. Load *ml-test* and run the unit tests:
   ```
