@@ -1,5 +1,5 @@
 # *cl-marklogic*
-*cl-marklogic* is a *Common Lisp* system for working with *MarkLogic Server* clusters. A stable version of *cl-marklogic* is available in the *QuickLisp* repository.
+*cl-marklogic* is a *Common Lisp* system for working with *MarkLogic Server* clusters. There is a stable version of *cl-marklogic* in the *QuickLisp* repository.
 
 *ml-optimizer* [Demonstration](http://opsresearch.com/demo/ml-optimizer/).
 
@@ -8,7 +8,7 @@ Tested with *SBCL* and *ABCL*.
 
 # Quick Start
 
-This quick tutorial shows you how to run some simple examples using *cl-marklogic*. It is written using *SBCL*, and *QuickLisp* on *OSX*. If you are using a different operating system you will need to adjust some details but the overall steps will be the same.
+This quick tutorial shows you how to run some simple examples using *cl-marklogic*. It is written to use *SBCL*, and *QuickLisp* on *OSX*. If you are using a different operating system you will need to adjust some details but the overall steps will be the same.
 
 * [Install *Homebrew*](http://brew.sh) if it isn't installed on your computer. 
 
