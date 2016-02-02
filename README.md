@@ -25,7 +25,7 @@ brew install rlwrap`
 * Load *cl-marklogic*.
 `(ql:quickload "cl-marklogic")`
 The first time you load *cl-marklogic*, *QuickLisp* will download it and the dependencies from the repository.
-
+ß
 * Load and run the unit tests, *ml-test*.
 `(ql:quickload "ml-test")`
 `(ml-test:test-all)`
