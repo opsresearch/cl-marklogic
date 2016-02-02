@@ -40,9 +40,11 @@ This quick tutorial shows you how to run some simple examples using *cl-marklogi
   >The connect test will fail since we have not configured a *MarkLogic Server* connection. 
 
 #### 7. Load *ml-optimizer* and start it:
-  ```(ql:quickload "ml-optimizer")
+  ```
+  (ql:quickload "ml-optimizer")
   (ml-optimizer:start)
   ```
+
 #### 8. Connect to [*ml-optimizer*](http://localhost:9001) with a browser.
   >By default *ml-optimizer* starts with a cached cluster configuration for demonstration.
 
