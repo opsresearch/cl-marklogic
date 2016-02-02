@@ -13,23 +13,23 @@ This quick tutorial shows you how to run some simple examples using *cl-marklogi
 * [Install *Homebrew*](http://brew.sh) if it isn't installed on your computer. 
 
 * Install *SBCL*.
-    `brew update`
-    `brew install SBCL`
-    `brew install rlwrap`
+  `brew update`
+  `brew install SBCL`
+  `brew install rlwrap`
 
 * [Install *QuickLisp*](https://www.quicklisp.org/beta/#installation). 
 
 * Start the *SBCL* REPL.
-    `rlwrap sbcl`
+  `rlwrap sbcl`
 
 * Load *cl-marklogic*.
-    `(ql:quickload "cl-marklogic")`
-    The first time you load *cl-marklogic*, *QuickLisp* will download it and the dependencies from the repository.
+  `(ql:quickload "cl-marklogic")`
+  The first time you load *cl-marklogic*, *QuickLisp* will download it and the dependencies from the repository.
 
 * Load and run the unit tests, *ml-test*.
-    `(ql:quickload "ml-test")`
-    `(ml-test:test-all)`
-    The connect test will fail since we have not configured a *MarkLogic Server* connection. 
+  `(ql:quickload "ml-test")`
+  `(ml-test:test-all)`
+  The connect test will fail since we have not configured a *MarkLogic Server* connection. 
 
 * Load and run *ml-optimizer*.
   `(ql:quickload "ml-optimizer")`
