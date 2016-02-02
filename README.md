@@ -13,9 +13,9 @@ This quick tutorial shows you how to run some simple examples using *cl-marklogi
 * [Install *Homebrew*](http://brew.sh) if it isn't installed on your computer. 
 
 * Install *SBCL*.
-  `brew update`
-  `brew install SBCL`
-  `brew install rlwrap`
+  * `brew update`
+  * `brew install SBCL`
+  * `brew install rlwrap`
 
 * [Install *QuickLisp*](https://www.quicklisp.org/beta/#installation). 
 
