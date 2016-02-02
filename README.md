@@ -10,41 +10,41 @@ Tested with *SBCL* and *ABCL*.
 
 This quick tutorial shows you how to run some simple examples using *cl-marklogic*. It is written to use *SBCL*, and *QuickLisp* on *OSX*. If you are using a different operating system you will need to adjust some details but the overall steps will be the same.
 
-* [Install *Homebrew*](http://brew.sh) if it isn't installed on your computer. 
+#### 1. [Install *Homebrew*](http://brew.sh).
 
-* Install *SBCL*.
-```
-brew update
-brew install SBCL
-brew install rlwrap
-```
+#### 2. Install *SBCL*:
+  ```
+  brew update
+  brew install SBCL
+  brew install rlwrap
+  ```
 
-* [Install *QuickLisp*](https://www.quicklisp.org/beta/#installation). 
+#### 3. [Install *QuickLisp*](https://www.quicklisp.org/beta/#installation). 
 
-* Start the *SBCL* REPL.
-```
-rlwrap sbcl
-```
+#### 4. Start the *SBCL* REPL:
+  ```
+  rlwrap sbcl
+  ```
 
-* Load *cl-marklogic*.
-```
-(ql:quickload "cl-marklogic")
-```
-The first time you load *cl-marklogic*, *QuickLisp* will download it and the dependencies from the repository.
-ß
-* Load and run the unit tests, *ml-test*.
-```
-(ql:quickload "ml-test")
-(ml-test:test-all)
-```
-The connect test will fail since we have not configured a *MarkLogic Server* connection. 
+#### 5. Load *cl-marklogic*.
+  ```
+  (ql:quickload "cl-marklogic")
+  ```
+   >The first time you load *cl-marklogic*, *QuickLisp* will download it and the dependencies from the repository.
 
-* Load and run *ml-optimizer*.
-```
-(ql:quickload "ml-optimizer")
-(ml-optimizer:start)
-```
-Connect to [*ml-optimizer*](http://localhost:9001) with a browser. By default *ml-optimizer* starts with a cached cluster configuration for demonstration.
+#### 6. Load *ml-test* and run the unit tests:
+  ```
+  (ql:quickload "ml-test")
+  (ml-test:test-all)
+  ```
+  >The connect test will fail since we have not configured a *MarkLogic Server* connection. 
+
+#### 7. Load *ml-optimizer* and start it:
+  ```(ql:quickload "ml-optimizer")
+  (ml-optimizer:start)
+  ```
+#### 8. Connect to [*ml-optimizer*](http://localhost:9001) with a browser.
+  >By default *ml-optimizer* starts with a cached cluster configuration for demonstration.
 
 
 
