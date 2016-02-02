@@ -6,7 +6,7 @@
 Tested with *MarkLogic Server* 8.
 Tested with *SBCL* and *ABCL*.
 
-# <a name="quick-start"></a>Quick Start
+# Quick Start
 
 This quick tutorial shows you how to run some simple examples using *cl-marklogic*. It is written using *SBCL*, and *QuickLisp* on *OSX*. If you are using a different operating system you will need to adjust some details but the overall steps will be the same.
 
