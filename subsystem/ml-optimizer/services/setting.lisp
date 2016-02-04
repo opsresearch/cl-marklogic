@@ -1,4 +1,4 @@
-;;;; ml-optimizer.asd
+;;;; setting.lisp
 
 ;;;;; BEGIN LICENSE BLOCK ;;;;;
 ;;;; 
@@ -19,33 +19,25 @@
 ;;;; 
 ;;;; END LICENSE BLOCK ;;;;;
 
-(asdf:defsystem #:ml-optimizer
-  :description "Common Lisp application to optimize MarkLogic clusters."
-  :author "Donald Anderson <dranderson@OpsResearch.com>"
-  :license "AGPL3"
-  :depends-on
-    (#:hunchentoot
-     #:cl-json
-     #:cl-marklogic
-     #:cl-opsresearch)
-  :serial t
-  :components
-    ((:file "package")
-      (:file "ml-optimizer")
-      (:module lib
-        :serial t
-        :components 
-          ((:file "dependent-hosts")))
-      (:module services
-      :serial t
-      :components 
-        ((:file "services")
-        (:file "setting")
-        (:file "cluster")
-        (:file "group")
-        (:file "host")
-        (:file "database")
-        (:file "forest")
-        (:file "id-names")))
-      (:file "initialize")))
+(in-package #:ml-optimizer)
+
+(defun setting-list ()
+  (json:encode-json-to-string 
+    '(((:setting-name . "Connection")
+       (:setting-id . "connection")))))
+
+(defun setting-detail (setting-id)
+  (json:encode-json-to-string 
+    '((:name . "Connection")
+       (:parameters . 
+                   (((:id . "connection.host")
+                     (:name . "Host")
+                     (:type . "string")
+                     (:value . "the-value")
+                     ))))))
+
+(hunchentoot:define-easy-handler (setting :uri "/api/setting" :default-request-type :get)
+                                 (id)
+                                 (setf (hunchentoot:content-type*) "application/json")
+                                 (if id (setting-detail id) (setting-list)))
 

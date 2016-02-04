@@ -32,6 +32,26 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     controller: 'AppCtrl'
   })
 
+  .state('app.settings', {
+    url: "/settings",
+    views: {
+        'menuContent': {
+            templateUrl: "templates/settings.html",
+            controller: 'SettingsCtrl'
+        }
+    }
+  })
+
+  .state('app.setting', {
+    url: "/settings/:settingId",
+    views: {
+        'menuContent': {
+          templateUrl: "templates/setting.html",
+          controller: 'SettingCtrl'
+      }
+    }
+  })
+
   .state('app.clusters', {
     url: "/clusters",
     views: {

@@ -1,0 +1,29 @@
+<ion-view view-title="Setting">
+  <ion-content>
+    <div class="list card">
+      <div class="item">
+        <h1>{{setting.name}}</h1>
+      </div>
+
+    <ion-list>
+      <ion-item ng-repeat="parameter in setting.parameters"
+          href="/api/parameter/{{parameter.id}}">{{parameter.name}}</ion-item>
+    </ion-list>
+
+      <div class="item tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item">
+          <i class="icon ion-thumbsup"></i>
+          Like
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-chatbox"></i>
+          Comment
+        </a>
+        <a class="tab-item">
+          <i class="icon ion-share"></i>
+          Share
+        </a>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

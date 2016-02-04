@@ -41,6 +41,34 @@ angular.module('starter.controllers', [])
   };
 })
 
+.controller('SettingsCtrl', function($scope, $http) {
+    $http.get('api/setting').then(function successCallback(response) {
+        $scope.settings = response.data;
+      },
+      function errorCallback(response) {
+        $scope.settings = [];
+      });
+})
+
+.controller('SettingCtrl', function($scope, $stateParams, $http) {
+  $http({
+    method: 'GET',
+    url: 'api/setting',
+    params: {id: $stateParams.settingId}
+    }).then(function successCallback(response) {
+        $scope.setting = response.data;
+      },
+      function errorCallback(response) {
+        $scope.setting = {};
+      });
+    $http.get('api/id-names').then(function successCallback(response) {
+        $scope.idNames = response.data;
+      },
+      function errorCallback(response) {
+        $scope.idNames = [];
+      });
+  })
+
 .controller('ClustersCtrl', function($scope, $http) {
     $http.get('api/cluster').then(function successCallback(response) {
         $scope.clusters = response.data;
