@@ -41,6 +41,7 @@
       :components 
         ((:file "services")
         (:file "setting")
+        (:file "setting-connection")
         (:file "cluster")
         (:file "group")
         (:file "host")

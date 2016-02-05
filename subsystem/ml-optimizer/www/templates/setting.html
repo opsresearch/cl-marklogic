@@ -2,13 +2,25 @@
   <ion-content>
     <div class="list card">
       <div class="item">
-        <h1>{{setting.name}}</h1>
+        <h1>{{setting.settingName}} - {{setting.settingInstance}}</h1>
       </div>
 
-    <ion-list>
-      <ion-item ng-repeat="parameter in setting.parameters"
-          href="/api/parameter/{{parameter.id}}">{{parameter.name}}</ion-item>
-    </ion-list>
+      <form ng-submit="/api/setting?id={{setting.settingId}}">
+        <ion-list>
+        <ion-item ng-repeat="parameter in setting.parameters">
+        
+
+        <label class="item item-input">
+          <b>{{parameter.name}}:&nbsp;</b> 
+            <input type="text" name="{{parameter.id}}" value="{{parameter.value}}"/>
+        </label>
+        </ion-item>
+
+      </ion-list>
+      <div class="padding">
+        <button type="submit" class="button button-block button-positive">Save</button>
+      </div>
+    </form>
 
       <div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item">

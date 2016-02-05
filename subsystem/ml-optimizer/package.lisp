@@ -31,5 +31,6 @@
     #:load-dependent-hosts
     #:save-dependent-hosts
     #:dependent-hosts-property
+    #:setting-connection-detail
     ))
 

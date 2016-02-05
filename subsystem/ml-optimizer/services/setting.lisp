@@ -27,14 +27,7 @@
        (:setting-id . "connection")))))
 
 (defun setting-detail (setting-id)
-  (json:encode-json-to-string 
-    '((:name . "Connection")
-       (:parameters . 
-                   (((:id . "connection.host")
-                     (:name . "Host")
-                     (:type . "string")
-                     (:value . "the-value")
-                     ))))))
+  (setting-connection-detail))
 
 (hunchentoot:define-easy-handler (setting :uri "/api/setting" :default-request-type :get)
                                  (id)
