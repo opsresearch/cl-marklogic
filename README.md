@@ -1,9 +1,9 @@
 # *cl-marklogic*
-*cl-marklogic* is a *Common Lisp* system for working with *MarkLogic Server* clusters. There is a stable version of *cl-marklogic* in the *QuickLisp* repository.
+*cl-marklogic* is a *Common Lisp* system for working with *MarkLogic* clusters. There is a stable version of *cl-marklogic* in the *QuickLisp* repository.
 
 *ml-optimizer* [Demonstration](http://opsresearch.com/demo/ml-optimizer/).
 
-Tested with *MarkLogic Server* 8.
+Tested with *MarkLogic* 8.
 Tested with *SBCL* and *ABCL*.
 
 # Quick Start
@@ -37,7 +37,7 @@ This quick tutorial shows you how to run some simple examples using *cl-marklogi
   (ql:quickload "ml-test")
   (ml-test:test-all)
   ```
-  >The connect test will fail since we have not configured a *MarkLogic Server* connection. 
+  >The connect test will fail since we have not configured a *MarkLogic* connection. 
 
 #### 7. Load *ml-optimizer* and start it:
   ```
