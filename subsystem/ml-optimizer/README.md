@@ -1,4 +1,5 @@
 # ml-optimizer
-Application for optimizing MarkLogic Server clusters.
+Application for optimizing MarkLogic clusters.
 
-Tested with SBCL and ABCL.
+Tested with MarkLogic 8.
+Tested with SBCL.
