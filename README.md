@@ -1,8 +1,6 @@
 # *cl-marklogic*
 *cl-marklogic* is a *Common Lisp* system for working with *MarkLogic* clusters. There is a stable version of *cl-marklogic* in the *QuickLisp* repository.
 
-*ml-optimizer* [Demonstration](http://opsresearch.com/demo/ml-optimizer/).
-
 Tested with *MarkLogic* 8.
 Tested with *SBCL* and *ABCL*.
 
