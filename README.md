@@ -1,5 +1,5 @@
 # *cl-marklogic*
-*cl-marklogic* is a *Common Lisp* system for working with *MarkLogic* clusters. There is a stable version of *cl-marklogic* in the *QuickLisp* repository.
+*cl-marklogic* is a *Common Lisp* system for optimizing *MarkLogic* clusters. There is a stable version of *cl-marklogic* in the *QuickLisp* repository.
 
 Tested with *MarkLogic* 8.
 Tested with *SBCL* and *ABCL*.
